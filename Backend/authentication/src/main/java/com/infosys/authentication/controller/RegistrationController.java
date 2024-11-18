@@ -19,7 +19,7 @@ public class RegistrationController {
         return registrationService.adminRegistration(adminDetailsDto,jwt);
     }
 
-    @PostMapping("/resident-register")
+    @PostMapping("/api/resident-register")
     public ApiResponse residentRegistration(@RequestHeader("Authorization") String jwt, @RequestBody ResidentDetailsDto residentDetailsDto) throws RegistrationException {
         System.out.println("Received JWT: " + jwt);
         System.out.println("Admin Details DTO: " + residentDetailsDto);

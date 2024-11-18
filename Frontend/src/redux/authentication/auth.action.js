@@ -59,7 +59,7 @@ function registerAdminDetails(registerDetails) {
       dispatch({ type: "REGISTER_RESIDENT_REQUEST" });
       console.log("Register Details (Admin):", registerDetails);
       try {
-        const response = await api.post(`${API_BASE_URL}/resident-register`,registerDetails.data,{
+        const response = await api.post(`${API_BASE_URL}/api/resident-register`,registerDetails.data,{
           headers:{
             "Authorization":`Bearer ${registerDetails.data.jwt}`,
             "Content-Type": "application/json"
