@@ -25,7 +25,7 @@ function AdminRegister() {
         const jwt=localStorage.getItem('jwt');
         const registerDetails={...formData,jwt}
         dispatch(registerAdminDetails({ data: registerDetails}));
-        navigate("/welcome");
+        navigate("/community");
     };
 
     return (

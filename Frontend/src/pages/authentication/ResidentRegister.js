@@ -22,7 +22,7 @@ function ResidentRegister() {
         const jwt=localStorage.getItem('jwt');
         const registerDetails={...formData,jwt}
         dispatch(registerResidentDetails({ data: registerDetails}));
-        navigate("/welcome");
+        navigate("/community");
     };
 
     return (

@@ -5,7 +5,8 @@ function loginUserAction(loginData) {
     return async function (dispatch) {
         dispatch({ type: "LOGIN_REQUEST"});
         try {
-            const response = await axios.post(`${API_BASE_URL}/auth/login`, loginData.data);
+            console.log("login data",loginData.data);
+            const response = await axios.post(`http://localhost:8081/auth/login`, loginData.data);
             const data = response.data;
             if (data.token) {
                 localStorage.setItem("jwt", data.token);
@@ -22,7 +23,7 @@ function registerUserAction(loginData) {
     return async function (dispatch) {
         dispatch({ type: "REGISTER_REQUEST" });
         try {
-            const response = await axios.post(`${API_BASE_URL}/auth/signup`, loginData.data);
+            const response = await axios.post(`http://localhost:8081/auth/signup`, loginData.data);
             const data = response.data;
             console.log(data.token);
             if (data.token) {
@@ -41,7 +42,7 @@ function registerAdminDetails(registerDetails) {
     return async function (dispatch) {
       dispatch({ type: "REGISTER_ADMIN_REQUEST"});
       try {
-        const response = await api.post(`${API_BASE_URL}/api/admin-register`,registerDetails.data,{
+        const response = await api.post(`http://localhost:8082/society-register`,registerDetails.data,{
           headers:{
             "Authorization":`Bearer ${registerDetails.data.jwt}`,
           }
@@ -57,9 +58,9 @@ function registerAdminDetails(registerDetails) {
   function registerResidentDetails(registerDetails) {
     return async function (dispatch) {
       dispatch({ type: "REGISTER_RESIDENT_REQUEST" });
-      console.log("Register Details (Admin):", registerDetails);
+      console.log("Register Details:", registerDetails);
       try {
-        const response = await api.post(`${API_BASE_URL}/api/resident-register`,registerDetails.data,{
+        const response = await api.post(`http://localhost:8082/resident-register`,registerDetails.data,{
           headers:{
             "Authorization":`Bearer ${registerDetails.data.jwt}`,
             "Content-Type": "application/json"
@@ -72,4 +73,26 @@ function registerAdminDetails(registerDetails) {
       }
     };
   }
-export { loginUserAction, registerUserAction, registerAdminDetails, registerResidentDetails };
+
+  function getUserDetails() {
+    return async function (dispatch) {
+      dispatch({ type: "GET_USER_DETAILS_REQUEST" });
+      const jwtToken=localStorage.getItem("jwt");
+      console.log("JWT Token:", jwtToken);
+      try {
+        const response = await api.get(`http://localhost:8082/getResident`,{
+          headers: {
+            "Authorization": `Bearer ${jwtToken}`,
+            "Content-Type": "application/json"
+          }
+        });
+        const data = response.data;
+        dispatch({ type: "GET_USER_DETAILS_SUCCESS", payload: data });
+      } catch (error) {
+        dispatch({ type: "GET_USER_DETAILS_FAILURE", payload: error });
+      }
+    };
+  }
+  
+
+export { loginUserAction, registerUserAction, registerAdminDetails, registerResidentDetails,getUserDetails };
