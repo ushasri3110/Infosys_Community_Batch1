@@ -5,6 +5,7 @@ import com.infosys.societymanagementservice.dto.ResidentDto;
 import com.infosys.societymanagementservice.exception.RegistrationException;
 import com.infosys.societymanagementservice.model.Society;
 import com.infosys.societymanagementservice.service.SocietyService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,4 +28,7 @@ public class SocietyController {
     public List<Society> getAllSocieties(){
         return societyService.getAllSocieties();
     }
+
+
+
 }

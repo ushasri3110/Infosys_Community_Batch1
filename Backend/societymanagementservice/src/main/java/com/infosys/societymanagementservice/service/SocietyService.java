@@ -6,8 +6,11 @@ import com.infosys.societymanagementservice.exception.RegistrationException;
 import com.infosys.societymanagementservice.model.Society;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SocietyService {
     public String societyRegistration(AdminDto adminDto, String jwt) throws RegistrationException;
     public List<Society> getAllSocieties();
+    public Society getSocietyByName(String name);
+    public Society getSocietyById(Long id);
 }

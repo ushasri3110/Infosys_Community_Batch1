@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SocietyServiceImplementation implements SocietyService{
@@ -36,4 +37,13 @@ public class SocietyServiceImplementation implements SocietyService{
     public List<Society> getAllSocieties() {
         return societyRepository.findAll();
     }
+    public Society getSocietyByName(String name) {
+        return societyRepository.findBySocietyName(name);
+    }
+
+    public Society getSocietyById(Long id){
+        Optional<Society> society=societyRepository.findById(id);
+        return society.orElse(null);
+    }
+
 }

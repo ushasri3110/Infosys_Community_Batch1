@@ -52,6 +52,6 @@ const SidebarMenu=[
         "icon":<LocalAtmIcon />,
         "item":"Billings",
         "path":"billings"
-    }
+    },
 ]
 export default SidebarMenu

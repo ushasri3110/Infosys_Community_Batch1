@@ -12,7 +12,7 @@ public class FlatController {
 
     @Autowired
     FlatService flatService;
-    @PostMapping("/flat")
+    @PostMapping("/addFlat")
     public Flat addFlat(@RequestBody Flat flat){
         System.out.println("Flat values"+flat);
         return flatService.addFlat(flat);

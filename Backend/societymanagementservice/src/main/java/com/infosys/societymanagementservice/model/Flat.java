@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,15 +20,7 @@ public class Flat {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long flatId;
     private String flatNo;
-
-    @ManyToOne
-    @JoinColumn(name = "society_id", nullable = false)
-    @JsonBackReference
-    private Society society;
-
-    @OneToMany(mappedBy = "flat", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<Resident> residents = new ArrayList<>();
+    private Long societyId;
 
 
 }

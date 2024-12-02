@@ -8,15 +8,14 @@ import MainPage from './pages/main/MainPage';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserDetails } from './redux/authentication/auth.action';
 import { useEffect } from 'react';
+import UserProfile from './components/profile/UserProfile';
 function App() {
   const dispatch = useDispatch();
   const isLogged = useSelector((store) => store.auth.isLogged); 
-  const jwtToken=useSelector((store)=>store.auth.jwt);
-  useEffect(() => {
-    if (isLogged) {
-      dispatch(getUserDetails()); 
-    }
-  }, [dispatch, isLogged, jwtToken]);
+  const jwt=localStorage.getItem("jwt");
+  useEffect(()=>{
+    dispatch(getUserDetails(jwt))
+  },[jwt])
   return (
     <div className="">
       <ToastContainer/>
@@ -24,6 +23,7 @@ function App() {
         <Route path="/*" element={<HomePage/>}/>
         <Route path="/auth/*" element={<Register/>}/>
         <Route path="/community/*" element={<MainPage/>}/>
+        <Route path='/profile' element={<UserProfile/>}/>
       </Routes>
       <Toast/>
     </div>
