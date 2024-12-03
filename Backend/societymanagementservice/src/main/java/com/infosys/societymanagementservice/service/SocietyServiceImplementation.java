@@ -45,5 +45,8 @@ public class SocietyServiceImplementation implements SocietyService{
         Optional<Society> society=societyRepository.findById(id);
         return society.orElse(null);
     }
-
+    public Society getAdminDetails(String jwt){
+        String email=authenticationInterface.getEmailFromJWT(jwt);
+        return societyRepository.findByEmail(email);
+    }
 }

@@ -26,8 +26,10 @@ public class UserController {
     }
     @GetMapping("/get-email")
     public String getEmailFromJWT(@RequestHeader("Authorization") String jwt){
-        String email=JwtProvider.getEmailFromJwtToken(jwt);
-        return email;
+        return JwtProvider.getEmailFromJwtToken(jwt);
     }
-
+    @GetMapping("/get-user")
+    public User getUser(@RequestHeader ("Authorization") String jwt){
+        return userService.getUser(jwt);
+    }
 }

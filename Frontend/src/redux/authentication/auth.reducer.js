@@ -1,4 +1,7 @@
-import {GET_USER_DETAILS_FAILURE, GET_USER_DETAILS_REQUEST, GET_USER_DETAILS_SUCCESS, 
+import {GET_ADMIN_DETAILS_FAILURE, GET_ADMIN_DETAILS_REQUEST, GET_ADMIN_DETAILS_SUCCESS, GET_USER_DETAILS_FAILURE, GET_USER_DETAILS_REQUEST, GET_USER_DETAILS_SUCCESS, 
+        GET_USER_FAILURE, 
+        GET_USER_REQUEST, 
+        GET_USER_SUCCESS, 
         LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, REGISTER_ADMIN_FAILURE, 
         REGISTER_ADMIN_REQUEST, REGISTER_ADMIN_SUCCESS, REGISTER_FAILURE, REGISTER_REQUEST, 
         REGISTER_RESIDENT_FAILURE, REGISTER_RESIDENT_REQUEST, REGISTER_RESIDENT_SUCCESS, REGISTER_SUCCESS } 
@@ -11,6 +14,7 @@ const initialState = {
     error: null,
     userDetails:null,
     loading: false,
+    user:null
 };
 
 const authReducer = (state = initialState, action) => {
@@ -20,6 +24,8 @@ const authReducer = (state = initialState, action) => {
         case REGISTER_ADMIN_REQUEST:
         case REGISTER_RESIDENT_REQUEST:
         case GET_USER_DETAILS_REQUEST:
+        case GET_ADMIN_DETAILS_REQUEST:
+        case GET_USER_REQUEST:
             return { ...state, loading: true, error: null };
         
         case LOGIN_SUCCESS:
@@ -48,7 +54,17 @@ const authReducer = (state = initialState, action) => {
                 loading: false,
                 error: null,
             };
+        case GET_USER_SUCCESS:
+            console.log(`user:${JSON.stringify(action.payload)}`);
+            return {
+                ...state,
+                loading: false,
+                user: action.payload,
+                error: null,
+            };
+       
         case GET_USER_DETAILS_SUCCESS:
+        case GET_ADMIN_DETAILS_SUCCESS:
             console.log(`user:${JSON.stringify(action.payload)}`);
             return {
                 ...state,
@@ -61,6 +77,8 @@ const authReducer = (state = initialState, action) => {
         case REGISTER_ADMIN_FAILURE:
         case REGISTER_RESIDENT_FAILURE:
         case GET_USER_DETAILS_FAILURE:
+        case GET_ADMIN_DETAILS_FAILURE:
+        case GET_USER_FAILURE:
             console.log(`${action.type} ${action.payload}`);
             return { 
                 ...state, 

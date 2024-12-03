@@ -4,7 +4,7 @@ import UserCard from "./UserCard";
 
 function UserProfile() {
   return (
-    <div>
+    <div className="bg-gray-100 w-screen h-screen">
       <Header/>
       <UserCard/>
     </div>

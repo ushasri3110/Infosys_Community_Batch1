@@ -1,6 +1,9 @@
 import axios from "axios";
-import { api, API_BASE_URL } from "../../config/api";
-import { GET_USER_DETAILS_FAILURE, GET_USER_DETAILS_REQUEST, GET_USER_DETAILS_SUCCESS, 
+import { api} from "../../config/api";
+import { GET_ADMIN_DETAILS_FAILURE, GET_ADMIN_DETAILS_REQUEST, GET_ADMIN_DETAILS_SUCCESS, GET_USER_DETAILS_FAILURE, GET_USER_DETAILS_REQUEST, GET_USER_DETAILS_SUCCESS, 
+         GET_USER_FAILURE, 
+         GET_USER_REQUEST, 
+         GET_USER_SUCCESS, 
          LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, REGISTER_ADMIN_FAILURE, REGISTER_ADMIN_REQUEST, 
          REGISTER_ADMIN_SUCCESS, REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_RESIDENT_FAILURE, 
          REGISTER_RESIDENT_REQUEST, REGISTER_RESIDENT_SUCCESS, REGISTER_SUCCESS } from "./auth.actionType";
@@ -95,6 +98,40 @@ function registerAdminDetails(registerDetails) {
       }
     };
   }
-  
 
-export { loginUserAction, registerUserAction, registerAdminDetails, registerResidentDetails,getUserDetails };
+  function getAdminDetails(jwtToken) {
+    return async function (dispatch) {
+      dispatch({ type: GET_ADMIN_DETAILS_REQUEST });
+      try {
+        const response = await api.get(`http://localhost:8082/get-admin`,{
+          headers: {
+            "Authorization": `Bearer ${jwtToken}`,
+            "Content-Type": "application/json"
+          }
+        });
+        const data = response.data;
+        dispatch({ type: GET_ADMIN_DETAILS_SUCCESS, payload: data });
+      } catch (error) {
+        dispatch({ type: GET_ADMIN_DETAILS_FAILURE, payload: error });
+      }
+    };
+  }
+  
+  function getUser(jwtToken) {
+    return async function (dispatch) {
+      dispatch({ type: GET_USER_REQUEST });
+      try {
+        const response = await api.get(`http://localhost:8081/get-user`,{
+          headers: {
+            "Authorization": `Bearer ${jwtToken}`,
+            "Content-Type": "application/json"
+          }
+        });
+        const data = response.data;
+        dispatch({ type: GET_USER_SUCCESS, payload: data });
+      } catch (error) {
+        dispatch({ type: GET_USER_FAILURE, payload: error });
+      }
+    };
+  }
+export { loginUserAction, registerUserAction, registerAdminDetails, registerResidentDetails,getUserDetails,getUser,getAdminDetails };

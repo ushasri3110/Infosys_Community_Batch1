@@ -10,4 +10,5 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public interface AuthenticationInterface {
     @GetMapping("/get-email")
     public String getEmailFromJWT(@RequestHeader("Authorization") String jwt);
+
 }

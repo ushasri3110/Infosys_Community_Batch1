@@ -9,5 +9,6 @@ import com.infosys.authentication.response.AuthResponse;
 public interface UserService {
     public AuthResponse signUp(User user) throws SignupException;
     public AuthResponse login(LoginDto loginData) throws LoginException;
+    public User getUser(String jwt);
 
 }

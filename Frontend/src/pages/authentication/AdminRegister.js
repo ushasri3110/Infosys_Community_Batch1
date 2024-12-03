@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../static/css/Register.css"; 
+// import "../../static/css/Register.css"; 
 import { useDispatch } from "react-redux";
 import { registerAdminDetails } from "../../redux/authentication/auth.action";
 import { useNavigate, useNavigation, useParams } from "react-router-dom";

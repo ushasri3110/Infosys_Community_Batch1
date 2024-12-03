@@ -7,10 +7,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @EnableFeignClients
 public class SocietymanagementserviceApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(SocietymanagementserviceApplication.class, args);
 		System.out.println("Application is running");
 	}
-
 }

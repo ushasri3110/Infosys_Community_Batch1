@@ -3,16 +3,22 @@ import SidebarMenu from "./SidebarMenu";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Card } from '@mui/material';
 import { useDispatch } from 'react-redux';
+import LogoutModal from './LogoutModal';
+import { useState } from 'react';
 
 function Sidebar() {
     const location = useLocation();
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-
-    const handleLogout = () => {
-        dispatch({ type: "LOGOUT" });
-        navigate("/auth");
-    };
+    const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    console.log("before changing state",open);
+    setOpen(false);
+    console.log("after changing state",open);
+  };
+  console.log(open)
 
     return (
         <Card className="w-[25%] static">
@@ -23,9 +29,9 @@ function Sidebar() {
                 {SidebarMenu.map((item, index) => (
                     <div
                         key={index}
-                        className={`px-5 py-2 rounded-lg mx-3 ${
+                        className={`px-5 py-1 rounded-lg mx-3 ${
                             location.pathname === `/community/${item.path}`
-                                ? "bg-gradient-to-r from-cyan-950 to-cyan-500 text-white"
+                                ? "bg-gradient-to-r from-cyan-950 to-cyan-600 text-white"
                                 : "hover:bg-gray-100"
                         }`}
                         onClick={() => navigate(`/community/${item.path}`)}
@@ -35,12 +41,11 @@ function Sidebar() {
                     </div>
                 ))}
             </div>
-            <div
-                className="absolute bottom-5 mx-3 text-cyan-950 cursor-pointer hover:bg-gray-100 px-5 py-2"
-                onClick={handleLogout}
-            >
+            <div className="absolute bottom-5 mx-3 text-cyan-950 cursor-pointer hover:bg-gray-100 px-5 py-2"
+                onClick={handleOpen}>
                 <LogoutIcon />
                 <span className="px-4">Logout</span>
+                <LogoutModal open={open} handleClose={handleClose}/>
             </div>
         </Card>
     );

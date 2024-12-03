@@ -10,7 +10,7 @@ function Toast() {
         if (message) {
             toast.success(message, {
                 position: "top-center",
-                autoClose: 4000,
+                autoClose: 1000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: false,
@@ -24,7 +24,7 @@ function Toast() {
         if (errorMessage) {
             toast.error(errorMessage, {
                 position: "top-center",
-                autoClose: 4000,
+                autoClose: 1000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: false,

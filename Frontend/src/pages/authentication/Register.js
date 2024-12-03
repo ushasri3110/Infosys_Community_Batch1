@@ -1,12 +1,11 @@
 import React from 'react'
-import "../../static/css/Register.css"; 
+// import "../../static/css/Register.css"; 
 import AdminRegister from './AdminRegister';
 import ResidentRegister from './ResidentRegister';
 import SignUp from './SignUp';
 import Login from './Login';
 import { Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import HomePage from '../homepage/HomePage';
 
 function Register() {
   const {auth}=useSelector(store=>store)

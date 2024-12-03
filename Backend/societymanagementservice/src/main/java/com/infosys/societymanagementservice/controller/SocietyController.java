@@ -29,6 +29,8 @@ public class SocietyController {
         return societyService.getAllSocieties();
     }
 
-
-
+    @GetMapping("/get-admin")
+    public Society getAdminDetails(@RequestHeader("Authorization") String jwt){
+        return societyService.getAdminDetails(jwt);
+    }
 }

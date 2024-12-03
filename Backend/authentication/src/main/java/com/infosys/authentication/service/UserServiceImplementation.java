@@ -51,6 +51,12 @@ public class UserServiceImplementation implements UserService{
         return new AuthResponse(token,"Login Success");
     }
 
+    @Override
+    public User getUser(String jwt) {
+        String email=JwtProvider.getEmailFromJwtToken(jwt);
+        return userRepository.findByEmail(email);
+    }
+
     public Authentication authenticate(String email,String password) throws LoginException {
         UserDetails userDetails=getDetails(email);
         if (userDetails==null){

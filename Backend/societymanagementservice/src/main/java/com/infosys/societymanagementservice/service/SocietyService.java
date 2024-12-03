@@ -13,4 +13,5 @@ public interface SocietyService {
     public List<Society> getAllSocieties();
     public Society getSocietyByName(String name);
     public Society getSocietyById(Long id);
+    public Society getAdminDetails(String jwt);
 }
