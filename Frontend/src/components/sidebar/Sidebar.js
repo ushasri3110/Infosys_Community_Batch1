@@ -14,11 +14,8 @@ function Sidebar() {
     setOpen(true);
   };
   const handleClose = () => {
-    console.log("before changing state",open);
     setOpen(false);
-    console.log("after changing state",open);
   };
-  console.log(open)
 
     return (
         <Card className="w-[25%] static">

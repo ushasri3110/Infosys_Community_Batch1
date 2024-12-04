@@ -18,19 +18,15 @@ function App() {
   const loading=useSelector(store=>store.auth.loading)
   useEffect(() => {
     if (jwt != null) {
-      console.log("getUser");
       dispatch(getUser(jwt));
     }
   }, [jwt, isLogged]);
   
   useEffect(() => {
     if (jwt != null && user?.role) {
-      console.log("getUserDetails");
       if (user.role === "Resident") {
-        console.log("Resident role detected:", user.role);
         dispatch(getUserDetails(jwt));
       } else if (user.role === "Admin") {
-        console.log("Admin role detected:", user.role);
         dispatch(getAdminDetails(jwt));
       }
     }

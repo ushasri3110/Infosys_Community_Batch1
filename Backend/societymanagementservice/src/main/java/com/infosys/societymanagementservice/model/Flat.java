@@ -20,6 +20,7 @@ public class Flat {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long flatId;
     private String flatNo;
+    private boolean occupied;
     private Long societyId;
 
 

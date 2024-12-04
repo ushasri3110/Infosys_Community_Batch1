@@ -55,7 +55,6 @@ const authReducer = (state = initialState, action) => {
                 error: null,
             };
         case GET_USER_SUCCESS:
-            console.log(`user:${JSON.stringify(action.payload)}`);
             return {
                 ...state,
                 loading: false,
@@ -65,7 +64,6 @@ const authReducer = (state = initialState, action) => {
        
         case GET_USER_DETAILS_SUCCESS:
         case GET_ADMIN_DETAILS_SUCCESS:
-            console.log(`user:${JSON.stringify(action.payload)}`);
             return {
                 ...state,
                 loading: false,
