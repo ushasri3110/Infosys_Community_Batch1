@@ -27,9 +27,7 @@ public class ResidentController {
         System.out.println("Received JWT: " + jwt);
         System.out.println("Admin Details DTO: " + residentDto);
         return residentService.residentRegistration(residentDto,jwt);
-
     }
-
     @GetMapping("/residents")
     public List<Resident> getResidents(){
         return residentService.getResidents();
@@ -38,5 +36,10 @@ public class ResidentController {
     @GetMapping("/getResidentProfile")
     public ResidentProfileDto getResidentProfile(@RequestHeader("Authorization") String jwt){
         return residentService.getResidentProfile(jwt);
+    }
+
+    @GetMapping("/getResidentByJWT")
+    public Resident getResidentByJWT(@RequestHeader("Authorization") String jwt){
+        return residentService.getResident(jwt);
     }
 }

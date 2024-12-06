@@ -8,7 +8,6 @@ function FlatsOccupiedCount() {
                 const response = await fetch('http://localhost:8082/getAllFlats');
                 if (!response.ok) throw new Error("Failed to fetch flats");
                 const data = await response.json();
-                console.log(data)
                 const occupiedFlats = data.filter(flat => flat.occupied === true);
                 setOccupiedCount(occupiedFlats.length);
             } catch (error) {

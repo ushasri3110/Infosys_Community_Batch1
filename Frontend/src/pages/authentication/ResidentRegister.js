@@ -2,8 +2,9 @@ import React, { useState } from "react";
 // import "../../static/css/Register.css"; 
 import { useNavigate} from "react-router-dom";
 import { registerResidentDetails } from "../../redux/authentication/auth.action";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 function ResidentRegister() {
+    const error=useSelector(store=>store.auth.error);
     const [formData, setFormData] = useState({
         name: "",
         phoneNo: "",
@@ -17,12 +18,14 @@ function ResidentRegister() {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit =async (e) => {
         e.preventDefault();
         const jwt=localStorage.getItem('jwt');
         const registerDetails={...formData,jwt}
-        dispatch(registerResidentDetails({ data: registerDetails}));
-        navigate("/community");
+        const result = await dispatch(registerResidentDetails({ data: registerDetails }));
+        if (result.success) {
+            navigate("/community"); 
+        } 
     };
 
     return (

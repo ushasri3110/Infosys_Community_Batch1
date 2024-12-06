@@ -19,9 +19,9 @@ public class FlatController {
     @PostMapping("/addFlat")
     public Flat addFlat(@RequestBody FlatDto flatDto){
         Flat flat=new Flat();
-        flat.setFlatNo(flat.getFlatNo());
+        flat.setFlatNo(flatDto.getFlatNo());
         flat.setSocietyId(flatDto.getSocietyId());
-        flat.setOccupied(true);
+        flat.setOccupied(false);
         System.out.println("Flat values"+flat);
         return flatService.addFlat(flat);
     }

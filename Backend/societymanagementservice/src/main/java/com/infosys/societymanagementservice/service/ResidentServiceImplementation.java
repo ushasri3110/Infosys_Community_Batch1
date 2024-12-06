@@ -27,6 +27,8 @@ public class ResidentServiceImplementation implements ResidentService{
     SocietyService societyService;
     @Autowired
     SocietyRepository societyRepository;
+    @Autowired
+    FlatRepository flatRepository;
     @Override
     public String residentRegistration(ResidentDto residentDto, String jwt) throws RegistrationException {
         Flat flat=flatService.getFlatByFlatNo(residentDto.getFlatNo());
@@ -41,8 +43,12 @@ public class ResidentServiceImplementation implements ResidentService{
         newResident.setSocietyId(society.getSocietyId());
         newResident.setFlatId(flat.getFlatId());
         newResident.setRole("Resident");
-        System.out.println(newResident);
-        residentRepository.save(newResident);
+        Resident savedResident=residentRepository.save(newResident);
+        flat.setOccupied(true);
+        flatRepository.save(flat);
+        if (savedResident.getResidentId()==null){
+            throw new RegistrationException("Unable to save the resident");
+        }
         return "Registration Successful";
     }
 

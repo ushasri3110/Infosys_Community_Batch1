@@ -1,5 +1,6 @@
 package com.infosys.societymanagementservice.service;
 
+import com.infosys.societymanagementservice.exception.RegistrationException;
 import com.infosys.societymanagementservice.model.Flat;
 import com.infosys.societymanagementservice.repository.FlatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,14 @@ public class FlatServiceImplementation implements FlatService{
     public Flat addFlat(Flat flat) {
         return flatRepository.save(flat);
     }
-    
 
     @Override
-    public Flat getFlatByFlatNo(String flatNo) {
-        return flatRepository.findByFlatNo(flatNo);
+    public Flat getFlatByFlatNo(String flatNo) throws RegistrationException {
+        Flat flat=flatRepository.findByFlatNo(flatNo);
+        if (flat!=null){
+            return flat;
+        }
+        throw new RegistrationException("Flat Not Found");
     }
 
     @Override

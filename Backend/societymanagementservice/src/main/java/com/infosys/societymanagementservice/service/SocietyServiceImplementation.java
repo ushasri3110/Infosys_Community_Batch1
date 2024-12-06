@@ -37,8 +37,12 @@ public class SocietyServiceImplementation implements SocietyService{
     public List<Society> getAllSocieties() {
         return societyRepository.findAll();
     }
-    public Society getSocietyByName(String name) {
-        return societyRepository.findBySocietyName(name);
+    public Society getSocietyByName(String name) throws RegistrationException {
+        Society society=societyRepository.findBySocietyName(name);
+        if (society!=null){
+            return society;
+        }
+        throw new RegistrationException("Society Not Found");
     }
 
     public Society getSocietyById(Long id){

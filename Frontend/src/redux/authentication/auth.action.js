@@ -4,7 +4,7 @@ import { GET_ADMIN_DETAILS_FAILURE, GET_ADMIN_DETAILS_REQUEST, GET_ADMIN_DETAILS
          GET_USER_FAILURE, 
          GET_USER_REQUEST, 
          GET_USER_SUCCESS, 
-         LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, REGISTER_ADMIN_FAILURE, REGISTER_ADMIN_REQUEST, 
+         LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, REGISTER_ADMIN_FAILURE, REGISTER_ADMIN_REQUEST, 
          REGISTER_ADMIN_SUCCESS, REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_RESIDENT_FAILURE, 
          REGISTER_RESIDENT_REQUEST, REGISTER_RESIDENT_SUCCESS, REGISTER_SUCCESS } from "./auth.actionType";
 
@@ -12,7 +12,6 @@ function loginUserAction(loginData) {
     return async function (dispatch) {
         dispatch({ type: LOGIN_REQUEST});
         try {
-            console.log("login data",loginData.data);
             const response = await axios.post(`http://localhost:8081/auth/login`, loginData.data);
             const data = response.data;
             if (data.token) {
@@ -75,8 +74,11 @@ function registerAdminDetails(registerDetails) {
         });
         const data = response.data;
         dispatch({ type: REGISTER_RESIDENT_SUCCESS, payload: data.message });
+        return { success: true };
       } catch (error) {
-        dispatch({ type: REGISTER_RESIDENT_FAILURE, payload: error });
+        const errorMessage = error.response?.data.message || "Registration failed";
+        dispatch({ type: REGISTER_RESIDENT_FAILURE, payload: errorMessage });
+        return { success: false, error: errorMessage };
       }
     };
   }
@@ -134,4 +136,10 @@ function registerAdminDetails(registerDetails) {
       }
     };
   }
-export { loginUserAction, registerUserAction, registerAdminDetails, registerResidentDetails,getUserDetails,getUser,getAdminDetails };
+  function logout(){
+    return async function(dispatch){
+      localStorage.removeItem("jwt");
+      dispatch({ type: LOGOUT, payload: null });
+    }
+  }
+export { loginUserAction, registerUserAction, registerAdminDetails, registerResidentDetails,getUserDetails,getUser,getAdminDetails,logout };

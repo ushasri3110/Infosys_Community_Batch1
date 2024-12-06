@@ -1,5 +1,6 @@
 import BlockCard from "./BlockCard";
 import BlockCount from "./BlockCount";
+import BlockDetails from "./BlockDetails";
 import Complaints from "./Complaints";
 import FlatCount from "./FlatCount";
 import FlatsOccupiedCount from "./FlatsOccupiedCount";
@@ -19,8 +20,8 @@ function Dashboard(){
             <FlatsOccupiedCount/>
             <SocietyPeopleCount/>
         </div>
-        <div className="flex p-5 space-x-3 justify-between my-2 flex-wrap space-y-2">
-            {blocks.map((items)=>(<BlockCard/>))}
+        <div className="p-5 my-2 ">
+            <BlockDetails/>
         </div>
         <div className="flex flex-row justify-between mx-5">
             <Complaints/>

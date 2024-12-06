@@ -18,7 +18,7 @@ function Sidebar() {
   };
 
     return (
-        <Card className="w-[25%] static">
+        <div className="static">
             <div className="flex justify-center">
                 <img src="https://i.ibb.co/8MnzPDm/freepik-background-85678.png" className="w-[70px]" />
             </div>
@@ -37,14 +37,14 @@ function Sidebar() {
                         <span className="px-4">{item.item}</span>
                     </div>
                 ))}
-            </div>
-            <div className="absolute bottom-5 mx-3 text-cyan-950 cursor-pointer hover:bg-gray-100 px-5 py-2"
+                <div className="absolute bottom-5 mx-3 text-cyan-950 cursor-pointer hover:bg-gray-100 px-5 py-2"
                 onClick={handleOpen}>
                 <LogoutIcon />
                 <span className="px-4">Logout</span>
                 <LogoutModal open={open} handleClose={handleClose}/>
             </div>
-        </Card>
+            </div>
+        </div>
     );
 }
 

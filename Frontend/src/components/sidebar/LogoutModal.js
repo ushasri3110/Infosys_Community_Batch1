@@ -3,6 +3,7 @@ import React from 'react';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { logout } from '../../redux/authentication/auth.action';
 
 const style = {
   position: "absolute",
@@ -23,9 +24,9 @@ function LogoutModal({ open,handleClose}) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    dispatch({ type: "LOGOUT" });
-    navigate("/auth");
+    dispatch(logout());
     handleClose(); 
+    navigate("/auth");
   };
   return (
     <div>

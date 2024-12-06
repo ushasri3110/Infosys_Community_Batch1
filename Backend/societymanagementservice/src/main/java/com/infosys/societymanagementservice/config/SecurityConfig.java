@@ -14,7 +14,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()  // Disable CSRF protection (not recommended for production)
                 .authorizeRequests()
-                .requestMatchers("/apis/**").authenticated()  // Allow public access to '/resident-register'
+                .requestMatchers("/apis/**").authenticated()
                 .anyRequest().permitAll();  // Require authentication for any other request
         return http.build();
     }
