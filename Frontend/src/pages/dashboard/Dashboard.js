@@ -1,4 +1,4 @@
-import BlockCard from "./BlockCard";
+import { useSelector } from "react-redux";
 import BlockCount from "./BlockCount";
 import BlockDetails from "./BlockDetails";
 import Complaints from "./Complaints";
@@ -9,11 +9,18 @@ import Securities from "./Securities";
 import SocietyPeopleCount from "./SocietyPeopleCount";
 import UpcomingEvents from "./UpcomingEvents";
 import Vendors from "./Vendors";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 function Dashboard(){
-    const blocks=[1,1]
+    const loading=useSelector(store=>store.auth?.loading);
     return(
         <div className="p-5">
+            <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1}}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
         <div className="flex justify-between mx-5">
             <BlockCount/>
             <FlatCount/>

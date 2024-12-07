@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeComplaint } from '../../redux/complaint/complaint.action';
+import { Backdrop, CircularProgress } from '@mui/material';
 
 function ComplaintList() {
     const [selectedBlock, setSelectedBlock] = useState("All");
@@ -8,7 +9,8 @@ function ComplaintList() {
     const newComplaint = useSelector(store => store.complaint.message);
     const closedComplaint = useSelector(store => store.complaint.closeMessage);
     const dispatch = useDispatch();
-
+    const loading = useSelector((state) => state.complaint?.loading);
+    
     const handleBlockClick = (block) => {
         setSelectedBlock(block);
     };
@@ -30,20 +32,27 @@ function ComplaintList() {
         fetchComplaints();
     }, [closedComplaint, newComplaint]);
 
+    // Sort complaints by complaintId in descending order
+    const sortedComplaints = complaints.sort((a, b) => b.complaintId - a.complaintId);
+
     // Filter complaints based on the selected block
-    const filteredComplaints = complaints.filter((complaint) => {
+    const filteredComplaints = sortedComplaints.filter((complaint) => {
         if (selectedBlock === "All") return true;
         return complaint.status === selectedBlock;
     });
 
     return (
         <div>
+            <Backdrop
+                sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={loading}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
             <div className="flex space-x-5">
                 <button
                     className={`px-6 py-2 rounded-3xl text-sm font-semibold shadow-md ${
-                        selectedBlock === "All"
-                            ? "bg-cyan-950 text-white"
-                            : "bg-white text-cyan-950"
+                        selectedBlock === "All" ? "bg-cyan-950 text-white" : "bg-white text-cyan-950"
                     }`}
                     onClick={() => handleBlockClick("All")}
                 >
@@ -51,9 +60,7 @@ function ComplaintList() {
                 </button>
                 <button
                     className={`px-6 py-2 rounded-3xl text-sm font-semibold shadow-md ${
-                        selectedBlock === "Open"
-                            ? "bg-cyan-950 text-white"
-                            : "bg-white text-cyan-950"
+                        selectedBlock === "Open" ? "bg-cyan-950 text-white" : "bg-white text-cyan-950"
                     }`}
                     onClick={() => handleBlockClick("Open")}
                 >
@@ -61,9 +68,7 @@ function ComplaintList() {
                 </button>
                 <button
                     className={`px-6 py-2 rounded-3xl text-sm font-semibold shadow-md ${
-                        selectedBlock === "Closed"
-                            ? "bg-cyan-950 text-white"
-                            : "bg-white text-cyan-950"
+                        selectedBlock === "Closed" ? "bg-cyan-950 text-white" : "bg-white text-cyan-950"
                     }`}
                     onClick={() => handleBlockClick("Closed")}
                 >
@@ -74,18 +79,18 @@ function ComplaintList() {
                 <h1 className="py-3 font-semibold">Complaint List</h1>
                 <table className="border-collapse">
                     <thead>
-                        <tr className=' border border-gray-300'>
+                        <tr className="border border-gray-300">
                             <td className="p-1.5 font-semibold text-sky-900 opacity-75">No</td>
                             <td className="p-1.5 font-semibold text-sky-900 opacity-75">Name</td>
                             <td className="p-1.5 font-semibold text-sky-900 opacity-75">Flat No</td>
-                            <td className="p-1.5 font-semibold text-sky-900 opacity-75 ">Complaint</td>
+                            <td className="p-1.5 font-semibold text-sky-900 opacity-75">Complaint</td>
                             <td className="p-1.5 font-semibold text-sky-900 opacity-75">Status</td>
                         </tr>
                     </thead>
                     <tbody>
                         {filteredComplaints.length > 0 ? (
                             filteredComplaints.map((complaint) => (
-                                <tr key={complaint.complaintId} className=' border border-gray-300'>
+                                <tr key={complaint.complaintId} className="border border-gray-300">
                                     <td className="p-1.5">{complaint.complaintId}</td>
                                     <td className="p-1.5">{complaint.personName}</td>
                                     <td className="p-1.5">{complaint.flatNo}</td>

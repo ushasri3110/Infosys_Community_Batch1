@@ -36,6 +36,9 @@ public class UserServiceImplementation implements UserService{
         }
         User newUser=new User();
         newUser.setEmail(user.getEmail());
+        if (user.getPassword().length()<7){
+            throw new SignupException("Password Should Be More Than 6 Characters");
+        }
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
         newUser.setRole(user.getRole());
         userRepository.save(newUser);

@@ -1,5 +1,4 @@
 import React from 'react'
-// import "../../static/css/Register.css"; 
 import AdminRegister from './AdminRegister';
 import ResidentRegister from './ResidentRegister';
 import SignUp from './SignUp';
@@ -8,7 +7,7 @@ import { Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 function Register() {
-  const {auth}=useSelector(store=>store)
+  const jwt=localStorage.getItem('jwt');
   return (
     <div className="flex items-center">
       <div className="h-screen w-[50%]">
@@ -18,8 +17,8 @@ function Register() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/admin-register" element={auth.jwt?<AdminRegister />:<SignUp/>} />
-          <Route path="/resident-register" element={auth.jwt?<ResidentRegister />:<SignUp/>} />
+          <Route path="/admin-register" element={jwt?<AdminRegister />:<SignUp/>} />
+          <Route path="/resident-register" element={jwt?<ResidentRegister />:<SignUp/>} />
         </Routes>
       </div>
     </div>

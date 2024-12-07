@@ -11,7 +11,6 @@ function addVendor(vendorData){
                     "Content-Type": "application/json"
                   }
             });
-            const data = response.data;
             dispatch({ type: ADD_VENDOR_SUCCESS, payload: "Added Vendor Successfully" });
         }
         catch(error){
@@ -24,19 +23,17 @@ function addVendor(vendorData){
 function requestService(requestData){
     return async function(dispatch){
         dispatch({type:REQUEST_SERVICE_REQUEST})
-        if (!requestData.vendorId) {
-            const errorMessage = "Select A Valid Service";
+        if (requestData.data.vendorId==null) {
+            const errorMessage = "Select A Valid Vendor...";
             dispatch({ type: REQUEST_SERVICE_FAILURE, payload: errorMessage });
             return;
         }
         try{
             const response = await axios.post(`http://localhost:8083/sendRequest`, requestData.data);
-            const data = response.data;
             dispatch({ type: REQUEST_SERVICE_SUCCESS, payload: "Request Sent Successfully" });
         }
         catch(error){
-            const errorMessage = error.response?.data?.message || "unable to send request";
-            dispatch({ type: REQUEST_SERVICE_FAILURE, payload: errorMessage });
+            dispatch({ type: REQUEST_SERVICE_FAILURE, payload: "Unable To Send Request"});
         }
     }
 }

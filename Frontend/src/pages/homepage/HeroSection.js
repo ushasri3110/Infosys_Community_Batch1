@@ -1,13 +1,17 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
 
 export default function HeroSection() {
-  const jwt=localStorage.getItem('jwt')
+  const jwt=localStorage.getItem('jwt');
+  const userDetails=useSelector(store=>store.auth?.userDetails);
+  const role=useSelector(store=>store.auth.user?.role)
   const navigate=useNavigate();
   const handleNavigation = () => {
-    if (jwt) {
+    if (jwt && userDetails) {
       navigate('/community'); 
-    } else {
+    }
+    else {
       navigate('/auth');
     }
   };

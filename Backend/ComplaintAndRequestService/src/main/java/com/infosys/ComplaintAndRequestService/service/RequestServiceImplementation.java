@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class RequestServiceImplementation implements RequestService{
+public class RequestServiceImplementation implements RequestService {
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -27,30 +27,33 @@ public class RequestServiceImplementation implements RequestService{
     @Autowired
     private RequestRepository requestRepository;
 
-    public String sendRequest(RequestDto requestDto) {
+    @Override
+    public String sendRequest(RequestDto requestDto) throws RequestException {
         Optional<Vendor> vendorOptional = vendorRepository.findById(requestDto.getVendorId());
-
         if (vendorOptional.isEmpty()) {
             throw new RequestException("Vendor with ID " + requestDto.getVendorId() + " not found.");
         }
-
         Vendor vendor = vendorOptional.get();
+        String emailBody = createRequestBody(requestDto);
+        String subject = vendor.getService();
+        String recipientEmail = vendor.getEmail();
+        boolean isEmailSent = sendEmail(recipientEmail, emailBody, subject);
 
-        Request newRequest = new Request();
-        newRequest.setAddress(requestDto.getAddress());
-        newRequest.setDescription(requestDto.getDescription());
-        newRequest.setStatus("Open");
-        newRequest.setVendorId(requestDto.getVendorId());
-        Request savedRequest = requestRepository.save(newRequest);
+        if (isEmailSent) {
+            Request newRequest = new Request();
+            newRequest.setAddress(requestDto.getAddress());
+            newRequest.setDescription(requestDto.getDescription());
+            newRequest.setStatus("Open");
+            newRequest.setVendorId(requestDto.getVendorId());
 
-        if (savedRequest.getRequestId() != null) {
-            return sendEmail(vendor.getEmail(), createRequestBody(requestDto), vendor.getService());
+            requestRepository.save(newRequest);
+            return "Request sent and saved successfully.";
         } else {
-            throw new RequestException("Failed to save the request.");
+            throw new RequestException("Failed to send the email. Request not saved.");
         }
     }
 
-    private String sendEmail(String toEmail, String body, String subject) {
+    private boolean sendEmail(String toEmail, String body, String subject) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom("ponakaushasri@gmail.com");
@@ -58,9 +61,9 @@ public class RequestServiceImplementation implements RequestService{
             message.setText(body);
             message.setSubject(subject);
             javaMailSender.send(message);
-            return "Request sent successfully.";
+            return true;
         } catch (Exception e) {
-            throw new RequestException("Failed to send email: " + e.getMessage());
+            return false;
         }
     }
 

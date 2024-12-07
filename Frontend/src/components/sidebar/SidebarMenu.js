@@ -7,6 +7,7 @@ import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import BadgeIcon from '@mui/icons-material/Badge';
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 import PostAddIcon from '@mui/icons-material/PostAdd';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 const SidebarMenu=[
     {
         "icon":<DashboardCustomizeIcon />,
@@ -24,7 +25,7 @@ const SidebarMenu=[
         "path":"complaints"
     },
     {
-        "icon":<EditCalendarIcon />,
+        "icon":<CalendarMonthIcon/>,
         "item":"Events",
         "path":"events"
     },

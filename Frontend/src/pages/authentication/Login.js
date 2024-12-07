@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'; 
 import { Link, useNavigate } from 'react-router-dom';
-import { loginUserAction } from '../../redux/authentication/auth.action';
+import { getUserDetails, loginUserAction } from '../../redux/authentication/auth.action';
 import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
@@ -9,10 +9,10 @@ function Login() {
         email: "",
         password: ""
     });
-
+    const userDetails=useSelector(store=>store.auth.userDetails);
+    const role=useSelector(store=>store.auth.user?.role);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const isLoggedIn = useSelector(state => state.auth.isLogged);
 
     const handleChange = (e) => {
@@ -29,7 +29,6 @@ function Login() {
             navigate('/community');
         }
     }, [isLoggedIn, navigate]);
-
     return (
         <div className='bg-slate-200 h-screen w-full p-5'>
             <div className='flex items-center justify-center space-x-3'>

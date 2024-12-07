@@ -10,17 +10,16 @@ function RequestForm({ vendorId }) {
     phoneNo: "",
     description: "",
   });
-
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.request?.loading);
-
+  console.log(loading)
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
-    dispatch(requestService({ data: { ...formData, vendorId } }));
+    await dispatch(requestService({ data: { ...formData, vendorId } }));
     setFormData({
       address: "",
       phoneNo: "",
@@ -32,8 +31,7 @@ function RequestForm({ vendorId }) {
     <div className="relative">
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={loading}
-      >
+        open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
 

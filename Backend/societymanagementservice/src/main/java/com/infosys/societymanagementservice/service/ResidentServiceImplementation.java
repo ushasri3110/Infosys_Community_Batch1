@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Service
 public class ResidentServiceImplementation implements ResidentService{
@@ -36,8 +37,17 @@ public class ResidentServiceImplementation implements ResidentService{
         Society society=societyService.getSocietyByName(residentDto.getSocietyName());
         Resident newResident=new Resident();
         newResident.setName(residentDto.getName());
+        String number=residentDto.getPhoneNo();
+        String regex = "^(\\+\\d{1,3}[- ]?)?\\d{10}$";
+        Pattern pattern = Pattern.compile(regex);
+        if (!pattern.matcher(number).matches()){
+            throw new RegistrationException("Phone Number is Invalid");
+        }
         newResident.setPhoneNo(residentDto.getPhoneNo());
         newResident.setFlatNo(residentDto.getFlatNo());
+        if (!society.getPostal().equals(residentDto.getPostal())){
+            throw new RegistrationException("Postal is Invalid");
+        }
         newResident.setPostal(residentDto.getPostal());
         newResident.setEmail(email);
         newResident.setSocietyId(society.getSocietyId());
@@ -47,7 +57,7 @@ public class ResidentServiceImplementation implements ResidentService{
         flat.setOccupied(true);
         flatRepository.save(flat);
         if (savedResident.getResidentId()==null){
-            throw new RegistrationException("Unable to save the resident");
+            throw new RegistrationException("Unable to Register");
         }
         return "Registration Successful";
     }

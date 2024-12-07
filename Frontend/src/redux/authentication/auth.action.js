@@ -60,7 +60,6 @@ function registerAdminDetails(registerDetails) {
       }
     };
   }
-  
   function registerResidentDetails(registerDetails) {
     return async function (dispatch) {
       dispatch({ type: REGISTER_RESIDENT_REQUEST });

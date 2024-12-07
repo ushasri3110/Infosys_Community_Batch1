@@ -1,7 +1,7 @@
-import { Box, Modal } from '@mui/material'
+import { Backdrop, Box, CircularProgress, Modal } from '@mui/material'
 import React, { useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addVendor } from '../../redux/request/request.action';
 const style = {
     position: "absolute",
@@ -21,6 +21,7 @@ const style = {
     justifyContent:"center",
   };
 function AddVendorModal({open,close}) {
+    const loading=useSelector(store=>store.request.loading);
     const [formData, setFormData] = useState({
         name: "",
         company:"",
@@ -38,6 +39,12 @@ function AddVendorModal({open,close}) {
         close();
     };
   return (
+    <div className='relative'>
+        <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
     <Modal open={open} onClose={close}>
         <Box sx={style}>
             <div className='absolute top-5 right-8 cursor-pointer' onClick={close}><CloseIcon/></div>
@@ -54,6 +61,7 @@ function AddVendorModal({open,close}) {
             </form>
         </Box>
     </Modal>
+    </div>
   )
 }
 

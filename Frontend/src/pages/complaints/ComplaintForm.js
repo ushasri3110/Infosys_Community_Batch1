@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import {registerComplaint} from '../../redux/complaint/complaint.action';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Backdrop, CircularProgress } from '@mui/material';
 
 function ComplaintForm() {
     const [formData, setFormData] = useState({
@@ -8,6 +9,7 @@ function ComplaintForm() {
         title:"",
         description: ""
     });
+    const loading=useSelector(store=>store.complaint?.loading);
     const dispatch = useDispatch();
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,7 +28,13 @@ function ComplaintForm() {
     }
     };
   return (
-    <div className=''>
+    <div className='relative'>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
         <h1 className='pb-3 font-bold text-xl'>Complaint Form</h1>
         <form className='flex flex-col space-y-2 w-[50%]' onSubmit={handleSubmit}>
         <label htmlFor="personName" className='text-sm'>Name</label>
