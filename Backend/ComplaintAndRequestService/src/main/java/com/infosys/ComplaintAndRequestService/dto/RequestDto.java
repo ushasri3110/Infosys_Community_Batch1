@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class RequestDto {
     private String address;
     private String description;
-    private String service;
+    private Long vendorId;
     private String phoneNo;
 }

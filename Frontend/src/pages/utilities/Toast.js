@@ -8,6 +8,8 @@ function Toast() {
     const complaintCreated=useSelector(state=>state.complaint.message);
     const complaintClosed=useSelector(state=>state.complaint.closeMessage);
     const vendorAdded=useSelector(state=>state.request.message);
+    const requestService=useSelector(state=>state.request.requestService);
+    const requestServiceError=useSelector(state=>state.request.requestServiceError);
     useEffect(() => {
         if (message) {
             toast.success(message, {
@@ -57,7 +59,19 @@ function Toast() {
                 transition: Bounce,
             });
         }
-    }, [message,complaintClosed,complaintCreated,vendorAdded]);
+        if (requestService) {
+            toast.success(requestService, {
+                position: "top-center",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                theme: "colored",
+                transition: Bounce,
+            });
+        }
+    }, [message,complaintClosed,complaintCreated,vendorAdded,requestService]);
     useEffect(() => {
         if (errorMessage) {
             toast.error(errorMessage, {
@@ -71,7 +85,19 @@ function Toast() {
                 transition: Bounce,
             });
         }
-    }, [errorMessage]);
+        if (requestServiceError) {
+            toast.error(requestServiceError, {
+                position: "top-center",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                theme: "colored",
+                transition: Bounce,
+            });
+        }
+    }, [errorMessage,requestServiceError]);
   return (
     <div></div>
   )

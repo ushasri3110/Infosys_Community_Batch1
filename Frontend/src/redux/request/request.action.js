@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ADD_VENDOR_FAILURE, ADD_VENDOR_REQUEST, ADD_VENDOR_SUCCESS } from "./request.actionType"
+import { ADD_VENDOR_FAILURE, ADD_VENDOR_REQUEST, ADD_VENDOR_SUCCESS, REQUEST_SERVICE_FAILURE, REQUEST_SERVICE_REQUEST, REQUEST_SERVICE_SUCCESS } from "./request.actionType"
 function addVendor(vendorData){
     return async function(dispatch){
         dispatch({type:ADD_VENDOR_REQUEST})
@@ -21,4 +21,24 @@ function addVendor(vendorData){
     }
 }
 
-export {addVendor}
+function requestService(requestData){
+    return async function(dispatch){
+        dispatch({type:REQUEST_SERVICE_REQUEST})
+        if (!requestData.vendorId) {
+            const errorMessage = "Select A Valid Service";
+            dispatch({ type: REQUEST_SERVICE_FAILURE, payload: errorMessage });
+            return;
+        }
+        try{
+            const response = await axios.post(`http://localhost:8083/sendRequest`, requestData.data);
+            const data = response.data;
+            dispatch({ type: REQUEST_SERVICE_SUCCESS, payload: "Request Sent Successfully" });
+        }
+        catch(error){
+            const errorMessage = error.response?.data?.message || "unable to send request";
+            dispatch({ type: REQUEST_SERVICE_FAILURE, payload: errorMessage });
+        }
+    }
+}
+
+export {addVendor,requestService}

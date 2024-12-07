@@ -8,14 +8,15 @@ function RequestPage() {
     const [vendors,setVendors]=useState([]);
     const [openModal,setOpenModal]=useState(false);
     const vendorAdded=useSelector(store=>store.request.message);
-    const [service,setService]=useState();
+    const [vendorId,setVendorId]=useState();
+    const role=useSelector(store=>store.auth.user?.role)
     const handleModalOpen = () => {
         setOpenModal(true);
     }
     const handleModalClose = () => {
         setOpenModal(false);
     }
-    const handleBlockClick=(block)=>(setService(block))
+    const handleBlockClick=(block)=>(setVendorId(block))
     useEffect(()=>{
         const fetchVendors = async () => {
             try {
@@ -35,20 +36,21 @@ function RequestPage() {
         {vendors.map((vendor)=>{
             return(
                 <button className={`px-6 py-2 rounded-3xl text-sm font-semibold shadow-md ${
-                    service=== vendor.service
+                    vendorId=== vendor.vendorId
                       ? "bg-cyan-950 text-white"
                       : "bg-white text-cyan-950"
-                  }`}onClick={() => handleBlockClick(vendor.service)}>{vendor.service}</button>
+                  }`}onClick={() => handleBlockClick(vendor.vendorId)}>{vendor.service}</button>
             )
         })}
         </div>
-        <RequestForm/>
+        <RequestForm vendorId={vendorId}/>
         <TotalVendors/>
         <div className='flex flex-row justify-between items-center'>
             <div className='w-3/4'><h1 className='font-extrabold text-xl text-cyan-900'>Vendors List</h1></div>
+            {role==="Admin"?
             <div className='w-1/4'><button className='bg-cyan-950 text-white px-2 py-1 rounded-lg' onClick={handleModalOpen}>Add Vendor</button>
             <AddVendorModal open={openModal} close={handleModalClose}/>
-            </div>
+            </div>:null}
         </div>
         <div className='w-[100%] mt-5'>
         <table className="border-collapse  w-[90%]">
