@@ -26,7 +26,7 @@ function Sidebar() {
                 {SidebarMenu.map((item, index) => (
                     <div
                         key={index}
-                        className={`px-5 py-1 rounded-lg mx-3 ${
+                        className={`px-5 py-1 rounded-lg mx-3 text-sm ${
                             location.pathname === `/community/${item.path}`
                                 ? "bg-gradient-to-r from-cyan-950 to-cyan-600 text-white"
                                 : "hover:bg-gray-100"

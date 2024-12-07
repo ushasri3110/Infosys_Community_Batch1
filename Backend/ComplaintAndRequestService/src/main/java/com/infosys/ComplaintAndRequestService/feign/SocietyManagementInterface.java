@@ -1,8 +1,8 @@
 package com.infosys.complaintandrequestservice.feign;
 
 import com.infosys.complaintandrequestservice.dto.ResidentDto;
+import com.infosys.complaintandrequestservice.dto.SocietyDto;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public interface SocietyManagementInterface {
     @GetMapping("/getResidentByJWT")
     ResidentDto getResidentByJWT(@RequestHeader("Authorization") String jwt);
+    @GetMapping("/get-admin")
+    SocietyDto getAdminDetails(@RequestHeader("Authorization") String jwt);
 }
 
 

@@ -14,7 +14,7 @@ function Header() {
   const user=useSelector(store=>store.auth.userDetails)
   return (
     <Card className="py-3 px-5 flex justify-between items-center max-w-screen">
-      <div className="text-3xl font-extrabold text-cyan-950">
+      <div className="text-3xl font-black text-cyan-950">
         {currentMenuItem ? currentMenuItem.item :location.pathname==="/apartment"?"Apartments": user_role?.role==="Admin"?"Admin Profile":"User Profile"}
       </div>
       <div className="flex flex-row space-x-5 text-cyan-950 items-center">

@@ -4,11 +4,12 @@ import Dashboard from "../dashboard/Dashboard";
 import Header from "../../components/header/Header";
 import ComplaintPage from "../complaints/ComplaintPage";
 import { Card } from "@mui/material";
+import RequestPage from "../requests/RequestPage";
 
 function MainPage() {
     return (
         <div className="flex h-screen">
-            <div className="w-1/4 bg-white drop-shadow-xl rounded-lg border border-1 border-gray-300">
+            <div className="w-[23%] bg-white drop-shadow-xl rounded-lg border border-1 border-gray-300">
                 <Sidebar />
             </div>
             <div className="flex-1 flex flex-col bg-gray-100">
@@ -18,6 +19,7 @@ function MainPage() {
                         <Route path="/" element={<Navigate to="/community/dashboard" />} />
                         <Route path="/dashboard" element={<Dashboard />} />
                         <Route path="/complaints" element={<ComplaintPage />} />
+                        <Route path="/requestServices" element={<RequestPage/>} />
                     </Routes>
                 </div>
             </div>

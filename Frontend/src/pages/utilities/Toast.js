@@ -7,6 +7,7 @@ function Toast() {
     const errorMessage= useSelector(state => state.auth.error);
     const complaintCreated=useSelector(state=>state.complaint.message);
     const complaintClosed=useSelector(state=>state.complaint.closeMessage);
+    const vendorAdded=useSelector(state=>state.request.message);
     useEffect(() => {
         if (message) {
             toast.success(message, {
@@ -44,7 +45,19 @@ function Toast() {
                 transition: Bounce,
             });
         }
-    }, [message,complaintClosed,complaintCreated]);
+        if (vendorAdded) {
+            toast.success(vendorAdded, {
+                position: "top-center",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                theme: "colored",
+                transition: Bounce,
+            });
+        }
+    }, [message,complaintClosed,complaintCreated,vendorAdded]);
     useEffect(() => {
         if (errorMessage) {
             toast.error(errorMessage, {

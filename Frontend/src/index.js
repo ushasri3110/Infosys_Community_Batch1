@@ -6,7 +6,9 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { store } from './redux/Store';
 import { Provider } from 'react-redux';
-import { Bounce, ToastContainer } from 'react-toastify';
+// import '@fontsource/roboto';
+import '@fontsource/roboto/400.css';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

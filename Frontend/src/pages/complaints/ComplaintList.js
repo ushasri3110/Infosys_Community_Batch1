@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closeComplaint } from '../../redux/complaint/complaint.action';
 
 function ComplaintList() {
-    const [selectedBlock, setSelectedBlock] = useState("all");
+    const [selectedBlock, setSelectedBlock] = useState("All");
     const [complaints, setComplaints] = useState([]);
-    const newComplaint=useSelector(store=>store.complaint.message);
-    const closedComplaint=useSelector(store=>store.complaint.closeMessage)
+    const newComplaint = useSelector(store => store.complaint.message);
+    const closedComplaint = useSelector(store => store.complaint.closeMessage);
     const dispatch = useDispatch();
 
     const handleBlockClick = (block) => {
@@ -28,66 +28,72 @@ function ComplaintList() {
             }
         };
         fetchComplaints();
-    }, [closedComplaint,newComplaint]);
+    }, [closedComplaint, newComplaint]);
+
+    // Filter complaints based on the selected block
+    const filteredComplaints = complaints.filter((complaint) => {
+        if (selectedBlock === "All") return true;
+        return complaint.status === selectedBlock;
+    });
 
     return (
         <div>
-            <div className="flex justify-around">
+            <div className="flex space-x-5">
                 <button
                     className={`px-6 py-2 rounded-3xl text-sm font-semibold shadow-md ${
-                        selectedBlock === "all"
+                        selectedBlock === "All"
                             ? "bg-cyan-950 text-white"
                             : "bg-white text-cyan-950"
                     }`}
-                    onClick={() => handleBlockClick("all")}
+                    onClick={() => handleBlockClick("All")}
                 >
                     All
                 </button>
                 <button
                     className={`px-6 py-2 rounded-3xl text-sm font-semibold shadow-md ${
-                        selectedBlock === "open"
+                        selectedBlock === "Open"
                             ? "bg-cyan-950 text-white"
                             : "bg-white text-cyan-950"
                     }`}
-                    onClick={() => handleBlockClick("open")}
+                    onClick={() => handleBlockClick("Open")}
                 >
                     Open
                 </button>
                 <button
                     className={`px-6 py-2 rounded-3xl text-sm font-semibold shadow-md ${
-                        selectedBlock === "closed"
+                        selectedBlock === "Closed"
                             ? "bg-cyan-950 text-white"
                             : "bg-white text-cyan-950"
                     }`}
-                    onClick={() => handleBlockClick("closed")}
+                    onClick={() => handleBlockClick("Closed")}
                 >
                     Closed
                 </button>
             </div>
             <div className="flex flex-col p-3">
-                <h1 className="py-3">Complaint List</h1>
-                <table className="border-collapse border border-2 border-gray-300">
+                <h1 className="py-3 font-semibold">Complaint List</h1>
+                <table className="border-collapse">
                     <thead>
-                        <tr>
-                            <td className="border border-2 border-gray-300 px-2">No</td>
-                            <td className="border border-2 border-gray-300 px-2">Name</td>
-                            <td className="border border-2 border-gray-300 px-2">Flat No</td>
-                            <td className="border border-2 border-gray-300 px-2">Complaint</td>
-                            <td className="border border-2 border-gray-300 px-2">Status</td>
+                        <tr className=' border border-gray-300'>
+                            <td className="p-1.5 font-semibold text-sky-900 opacity-75">No</td>
+                            <td className="p-1.5 font-semibold text-sky-900 opacity-75">Name</td>
+                            <td className="p-1.5 font-semibold text-sky-900 opacity-75">Flat No</td>
+                            <td className="p-1.5 font-semibold text-sky-900 opacity-75 ">Complaint</td>
+                            <td className="p-1.5 font-semibold text-sky-900 opacity-75">Status</td>
                         </tr>
                     </thead>
                     <tbody>
-                        {complaints.length > 0 ? (
-                            complaints.map((complaint) => (
-                                <tr key={complaint.complaintId}>
-                                    <td className="border border-2 border-gray-300 px-2">{complaint.complaintId}</td>
-                                    <td className="border border-2 border-gray-300 px-2">{complaint.personName}</td>
-                                    <td className="border border-2 border-gray-300 px-2">{complaint.flatNo}</td>
-                                    <td className="border border-2 border-gray-300 px-2">{complaint.description}</td>
-                                    <td className="border border-2 border-gray-300 px-2">
+                        {filteredComplaints.length > 0 ? (
+                            filteredComplaints.map((complaint) => (
+                                <tr key={complaint.complaintId} className=' border border-gray-300'>
+                                    <td className="p-1.5">{complaint.complaintId}</td>
+                                    <td className="p-1.5">{complaint.personName}</td>
+                                    <td className="p-1.5">{complaint.flatNo}</td>
+                                    <td className="p-1.5">{complaint.description}</td>
+                                    <td className="p-1.5">
                                         {complaint.status}
                                         {complaint.status === "Open" && (
-                                            <span className="px-2">
+                                            <span className="p-2">
                                                 <button
                                                     className="bg-red-600 rounded-md px-1 py-0.5 text-white"
                                                     onClick={() => handleClose(complaint.complaintId)}
