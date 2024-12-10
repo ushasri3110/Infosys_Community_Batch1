@@ -10,6 +10,7 @@ function ComplaintList() {
     const closedComplaint = useSelector(store => store.complaint.closeMessage);
     const dispatch = useDispatch();
     const loading = useSelector((state) => state.complaint?.loading);
+    const role=useSelector(store=>store.auth.user?.role);
     
     const handleBlockClick = (block) => {
         setSelectedBlock(block);
@@ -32,10 +33,8 @@ function ComplaintList() {
         fetchComplaints();
     }, [closedComplaint, newComplaint]);
 
-    // Sort complaints by complaintId in descending order
     const sortedComplaints = complaints.sort((a, b) => b.complaintId - a.complaintId);
 
-    // Filter complaints based on the selected block
     const filteredComplaints = sortedComplaints.filter((complaint) => {
         if (selectedBlock === "All") return true;
         return complaint.status === selectedBlock;
@@ -97,7 +96,7 @@ function ComplaintList() {
                                     <td className="p-1.5">{complaint.description}</td>
                                     <td className="p-1.5">
                                         {complaint.status}
-                                        {complaint.status === "Open" && (
+                                        {role=="Admin"?complaint.status === "Open" && (
                                             <span className="p-2">
                                                 <button
                                                     className="bg-red-600 rounded-md px-1 py-0.5 text-white"
@@ -106,7 +105,7 @@ function ComplaintList() {
                                                     Close
                                                 </button>
                                             </span>
-                                        )}
+                                        ):null}
                                     </td>
                                 </tr>
                             ))

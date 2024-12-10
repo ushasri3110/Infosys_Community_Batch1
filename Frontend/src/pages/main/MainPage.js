@@ -5,6 +5,7 @@ import Header from "../../components/header/Header";
 import ComplaintPage from "../complaints/ComplaintPage";
 import { Card } from "@mui/material";
 import RequestPage from "../requests/RequestPage";
+import EventPage from "../events/EventPage";
 
 function MainPage() {
     return (
@@ -20,6 +21,7 @@ function MainPage() {
                         <Route path="/dashboard" element={<Dashboard />} />
                         <Route path="/complaints" element={<ComplaintPage />} />
                         <Route path="/requestServices" element={<RequestPage/>} />
+                        <Route path="/events" element={<EventPage/>}/>
                     </Routes>
                 </div>
             </div>

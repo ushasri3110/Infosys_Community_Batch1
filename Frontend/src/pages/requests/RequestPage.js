@@ -51,7 +51,7 @@ function RequestPage() {
         })}
         </div>
         <RequestForm vendorId={vendorId}/>
-        <TotalVendors/>
+        <TotalVendors totalVendors={vendors.length}/>
         <div className='flex flex-row justify-between items-center'>
             <div className='w-3/4'><h1 className='font-extrabold text-xl text-cyan-900'>Vendors List</h1></div>
             {role==="Admin"?

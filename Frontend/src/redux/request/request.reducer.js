@@ -29,6 +29,7 @@ const requestReducer = (state = initialState, action) => {
             };
 
         case REQUEST_SERVICE_SUCCESS:
+            console.log("requestService ")
             return {
                 ...state,
                 loading: false,

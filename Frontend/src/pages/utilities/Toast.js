@@ -10,6 +10,8 @@ function Toast() {
     const vendorAdded=useSelector(state=>state.request.message);
     const requestService=useSelector(state=>state.request.requestService);
     const requestServiceError=useSelector(state=>state.request.requestServiceError);
+    const eventAddSuccess=useSelector(state=>state.event?.message)
+    const eventAddFailure=useSelector(state=>state.event?.error)
     useEffect(() => {
         if (message) {
             toast.success(message, {
@@ -71,7 +73,19 @@ function Toast() {
                 transition: Zoom,
             });
         }
-    }, [message,complaintClosed,complaintCreated,vendorAdded,requestService]);
+        if (eventAddSuccess) {
+            toast.success(eventAddSuccess, {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                theme: "light",
+                transition: Zoom,
+            });
+        }
+    }, [message,complaintClosed,complaintCreated,vendorAdded,requestService,eventAddSuccess]);
     useEffect(() => {
         if (errorMessage) {
             toast.error(errorMessage, {
@@ -97,7 +111,19 @@ function Toast() {
                 transition: Zoom,
             });
         }
-    }, [errorMessage,requestServiceError]);
+        if (eventAddFailure) {
+            toast.error(eventAddFailure, {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                theme: "light",
+                transition: Zoom,
+            });
+        }
+    }, [errorMessage,requestServiceError,eventAddFailure]);
   return (
     <div></div>
   )

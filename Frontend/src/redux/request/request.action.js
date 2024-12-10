@@ -23,6 +23,7 @@ function addVendor(vendorData){
 function requestService(requestData){
     return async function(dispatch){
         dispatch({type:REQUEST_SERVICE_REQUEST})
+        console.log("requestService error",requestData.data)
         if (requestData.data.vendorId==null) {
             const errorMessage = "Select A Valid Vendor...";
             dispatch({ type: REQUEST_SERVICE_FAILURE, payload: errorMessage });
