@@ -2,7 +2,6 @@ package com.infosys.NoticeboardEventsPostService.controller;
 
 import com.infosys.NoticeboardEventsPostService.dto.FeedbackDto;
 import com.infosys.NoticeboardEventsPostService.model.Feedback;
-import com.infosys.NoticeboardEventsPostService.repository.FeedbackRepository;
 import com.infosys.NoticeboardEventsPostService.response.FeedbackResponse;
 import com.infosys.NoticeboardEventsPostService.service.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;

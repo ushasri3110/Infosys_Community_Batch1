@@ -5,13 +5,12 @@ import { Zoom , toast } from 'react-toastify';
 function Toast() {
     const message = useSelector(state => state.auth.message);
     const errorMessage= useSelector(state => state.auth.error);
-    const complaintCreated=useSelector(state=>state.complaint.complaintCreatedMessage);
-    const complaintClosed=useSelector(state=>state.complaint.closeMessage);
-    const vendorAdded=useSelector(state=>state.request.message);
-    const requestService=useSelector(state=>state.request.requestService);
-    const requestServiceError=useSelector(state=>state.request.requestServiceError);
-    const eventAddSuccess=useSelector(state=>state.event?.message)
-    const eventAddFailure=useSelector(state=>state.event?.error)
+    const complaintSuccess=useSelector(state=>state.complaint.message);
+    const complaintError = useSelector(state=>state.complaint.error);
+    const requestSuccess=useSelector(state=>state.request.message);
+    const requestError=useSelector(state=>state.request.error);
+    const eventSuccess=useSelector(state=>state.event?.message)
+    const eventFailure=useSelector(state=>state.event?.error)
     useEffect(() => {
         if (message) {
             toast.success(message, {
@@ -25,8 +24,8 @@ function Toast() {
                 transition: Zoom,
             });
         }
-        if (complaintClosed) {
-            toast.success(complaintClosed, {
+        if (complaintSuccess) {
+            toast.success(complaintSuccess, {
                 position: "top-center",
                 autoClose: 2000,
                 hideProgressBar: false,
@@ -37,8 +36,8 @@ function Toast() {
                 transition: Zoom,
             });
         }
-        if (complaintCreated) {
-            toast.success(complaintCreated, {
+        if (requestSuccess) {
+            toast.success(requestSuccess, {
                 position: "top-center",
                 autoClose: 2000,
                 hideProgressBar: false,
@@ -49,8 +48,8 @@ function Toast() {
                 transition: Zoom,
             });
         }
-        if (vendorAdded) {
-            toast.success(vendorAdded, {
+        if (eventSuccess) {
+            toast.success(eventSuccess, {
                 position: "top-center",
                 autoClose: 2000,
                 hideProgressBar: false,
@@ -61,31 +60,7 @@ function Toast() {
                 transition: Zoom,
             });
         }
-        if (requestService) {
-            toast.success(requestService, {
-                position: "top-center",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                theme: "light",
-                transition: Zoom,
-            });
-        }
-        if (eventAddSuccess) {
-            toast.success(eventAddSuccess, {
-                position: "top-center",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                theme: "light",
-                transition: Zoom,
-            });
-        }
-    }, [message,complaintClosed,complaintCreated,vendorAdded,requestService,eventAddSuccess]);
+    }, [message,complaintSuccess,requestSuccess,eventSuccess]);
     useEffect(() => {
         if (errorMessage) {
             toast.error(errorMessage, {
@@ -99,8 +74,8 @@ function Toast() {
                 transition: Zoom,
             });
         }
-        if (requestServiceError) {
-            toast.error(requestServiceError, {
+        if (requestError) {
+            toast.error(requestError, {
                 position: "top-center",
                 autoClose: 2000,
                 hideProgressBar: false,
@@ -111,8 +86,8 @@ function Toast() {
                 transition: Zoom,
             });
         }
-        if (eventAddFailure) {
-            toast.error(eventAddFailure, {
+        if (complaintError) {
+            toast.error(complaintError, {
                 position: "top-center",
                 autoClose: 2000,
                 hideProgressBar: false,
@@ -123,7 +98,19 @@ function Toast() {
                 transition: Zoom,
             });
         }
-    }, [errorMessage,requestServiceError,eventAddFailure]);
+        if (eventFailure) {
+            toast.error(eventFailure, {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                theme: "light",
+                transition: Zoom,
+            });
+        }
+    }, [errorMessage,requestError,complaintError,eventFailure]);
   return (
     <div></div>
   )

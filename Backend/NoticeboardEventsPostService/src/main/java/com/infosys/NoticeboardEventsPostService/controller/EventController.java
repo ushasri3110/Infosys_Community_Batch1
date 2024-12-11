@@ -36,4 +36,9 @@ public class EventController {
     public EventResponse deleteEvent(@PathVariable Long eventId){
         return eventService.deleteEvent(eventId);
     }
+
+    @GetMapping("/getEventById/{eventId}")
+    public Event getEventByEventId(@PathVariable Long eventId){
+        return eventService.getEventById(eventId);
+    }
 }

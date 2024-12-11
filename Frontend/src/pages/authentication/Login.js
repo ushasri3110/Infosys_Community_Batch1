@@ -21,6 +21,7 @@ function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log("button clicked")
         dispatch(loginUserAction({ data: formData }));
     };
 

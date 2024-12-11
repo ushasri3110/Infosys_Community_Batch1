@@ -6,8 +6,7 @@ import { Backdrop, CircularProgress } from '@mui/material';
 function ComplaintList() {
     const [selectedBlock, setSelectedBlock] = useState("All");
     const [complaints, setComplaints] = useState([]);
-    const newComplaint = useSelector(store => store.complaint.message);
-    const closedComplaint = useSelector(store => store.complaint.closeMessage);
+    const complaint = useSelector(store => store.complaint?.message);
     const dispatch = useDispatch();
     const loading = useSelector((state) => state.complaint?.loading);
     const role=useSelector(store=>store.auth.user?.role);
@@ -31,7 +30,7 @@ function ComplaintList() {
             }
         };
         fetchComplaints();
-    }, [closedComplaint, newComplaint]);
+    }, [complaint]);
 
     const sortedComplaints = complaints.sort((a, b) => b.complaintId - a.complaintId);
 

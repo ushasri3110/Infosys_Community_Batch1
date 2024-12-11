@@ -71,11 +71,20 @@ public class EventServiceImplementation implements EventService{
     }
 
     @Override
-    public EventResponse deleteEvent(Long eventId) {
+    public EventResponse deleteEvent(Long eventId) throws EventException{
         if (!eventRepository.existsById(eventId)) {
             throw new EventException("Event Not Found");
         }
         eventRepository.deleteById(eventId);
         return new EventResponse(null,"Event Deleted Successfully");
+    }
+
+    @Override
+    public Event getEventById(Long eventId) throws EventException{
+        Optional<Event> event=eventRepository.findById(eventId);
+        if (event.isPresent()){
+            return event.get();
+        }
+        throw new EventException("Event Not Found");
     }
 }

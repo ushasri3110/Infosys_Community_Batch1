@@ -13,7 +13,7 @@ function registerComplaint(complaintData){
                   }
             });
             const data = response.data;
-            dispatch({ type: REGISTER_COMPLAINT_SUCCESS, payload: data });
+            dispatch({ type: REGISTER_COMPLAINT_SUCCESS, payload: "Complaint Registered Sucessfully" });
         }
         catch(error){
             const errorMessage = error.response?.data?.message || "unable to register complaint";
@@ -27,7 +27,7 @@ function closeComplaint(complaintId){
         try{
             const response = await axios.put(`http://localhost:8083/closeComplaint/${complaintId}`);
             const data = response.data;
-            dispatch({ type: CLOSE_COMPLAINT_SUCCESS, payload: data });
+            dispatch({ type: CLOSE_COMPLAINT_SUCCESS, payload: "Complaint Closed Successfully" });
         }
         catch(error){
             const errorMessage = error.response?.data?.message || "unable to register complaint";

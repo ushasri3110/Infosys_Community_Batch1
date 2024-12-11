@@ -10,6 +10,7 @@ import { getAdminDetails, getUser, getUserDetails } from './redux/authentication
 import { useEffect } from 'react';
 import UserProfile from './components/profile/UserProfile';
 import ApartmentsPage from './pages/apartments/ApartmentsPage';
+import EventFeedback from './pages/events/EventFeedback';
 
 function App() {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ function App() {
           <Route path="/community/*" element={<MainPage />} />
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/apartment" element={<ApartmentsPage />} />
+          <Route path="/event-feedback/:eventId" element={<EventFeedback/>}/>
         </Routes>
       ) : (
         <Routes>

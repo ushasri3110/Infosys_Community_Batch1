@@ -33,7 +33,6 @@ function UpdateEventModal({ open, close, event }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Initialize the form with the current event data when the modal opens
     if (event) {
       setEventName(event.eventName || '');
       setEventDate(event.eventDate || '');

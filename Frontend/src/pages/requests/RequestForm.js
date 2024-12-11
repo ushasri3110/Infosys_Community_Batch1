@@ -12,7 +12,6 @@ function RequestForm({ vendorId }) {
   });
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.request?.loading);
-  console.log(loading)
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };

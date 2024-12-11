@@ -10,6 +10,7 @@ import { GET_ADMIN_DETAILS_FAILURE, GET_ADMIN_DETAILS_REQUEST, GET_ADMIN_DETAILS
 
 function loginUserAction(loginData) {
     return async function (dispatch) {
+      console.log(loginData)
         dispatch({ type: LOGIN_REQUEST});
         try {
             const response = await axios.post(`http://localhost:8081/auth/login`, loginData.data);

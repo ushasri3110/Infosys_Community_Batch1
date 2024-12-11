@@ -16,6 +16,7 @@ function ComplaintPage() {
     const [unsolvedComplaints, setUnsolvedComplaints] = useState(0);
     const [complaintsBlockA, setComplaintsBlockA] = useState(0);
     const [complaintsBlockB, setComplaintsBlockB] = useState(0);
+    const complaint=useSelector(store=>store.complaint?.message)
     const role = useSelector(store => store.auth.user?.role);
     useEffect(() => {
         const fetchComplaints = async () => {

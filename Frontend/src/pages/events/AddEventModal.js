@@ -1,10 +1,10 @@
 import { Backdrop, Box, CircularProgress, Modal } from '@mui/material';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { UploadToCloudinary } from '../utilities/UploadToCloudinary';
 import { useDispatch } from 'react-redux';
-import { updateEvent } from '../../redux/events/event.action'; // Update this import based on your actual action
+import { addEvent } from '../../redux/events/event.action';
 
 const style = {
   position: 'absolute',
@@ -24,24 +24,13 @@ const style = {
   justifyContent: 'center',
 };
 
-function UpdateEventModal({ open, close, event }) {
+function AddEventModal({ open, close }) {
   const [eventName, setEventName] = useState('');
   const [eventDate, setEventDate] = useState('');
   const [eventDetails, setEventDetails] = useState('');
   const [eventImage, setEventImage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    // Initialize the form with the current event data when the modal opens
-    if (event) {
-      setEventName(event.eventName || '');
-      setEventDate(event.eventDate || '');
-      setEventDetails(event.eventDetails || '');
-      setEventImage(event.eventImage || '');
-    }
-  }, [event]);
-
+  const dispatch=useDispatch();
   const handleSelectImage = async (event) => {
     setIsLoading(true);
     try {
@@ -62,7 +51,8 @@ function UpdateEventModal({ open, close, event }) {
       eventDetails,
       eventImage,
     };
-    dispatch(updateEvent(event.id, formData)); // Assuming 'updateEvent' takes an ID and updated data
+    dispatch(addEvent(formData));
+    console.log('Form Data:', formData);
     close();
     setEventName('');
     setEventDate('');
@@ -86,20 +76,20 @@ function UpdateEventModal({ open, close, event }) {
             </div>
             <form className="flex flex-col space-y-3" onSubmit={handleSubmit}>
               <div className="flex flex-row justify-between space-x-5">
-                <div className="w-[5.5rem] h-[5.5rem] bg-cyan-950 text-white text-xs flex justify-center items-center rounded-lg cursor-pointer w-1/4 relative">
-                  <label>
-                    <input
-                      type="file"
-                      name="eventImage"
-                      accept="image/*"
-                      style={{ display: 'none' }}
-                      onChange={handleSelectImage}
-                    />
-                    <AddCircleIcon sx={{ fontSize: 'medium', cursor: 'pointer' }} />
-                    <span className="cursor-pointer">Add Image</span>
-                  </label>
-                  {eventImage && <img className="h-[5.5rem] w-[5.5rem] absolute top-0 left-0" src={eventImage} alt="Selected" />}
-                </div>
+                  <div className="w-[5.5rem] h-[5.5rem] bg-cyan-950 text-white text-xs flex justify-center items-center rounded-lg cursor-pointer w-1/4 relative">
+                    <label>
+                      <input
+                        type="file"
+                        name="eventImage"
+                        accept="image/*"
+                        style={{ display: 'none' }}
+                        onChange={handleSelectImage}
+                      />
+                      <AddCircleIcon sx={{ fontSize: 'medium', cursor: 'pointer' }} />
+                      <span className="cursor-pointer">Add Image</span>
+                    </label>
+                    {eventImage && <img className="h-[5.5rem] w-[5.5rem] absolute top-0 left-0" src={eventImage} alt="Selected" />}
+                  </div>
 
                 <div className="flex flex-col justify-between w-3/4 my-2">
                   <input
@@ -135,7 +125,7 @@ function UpdateEventModal({ open, close, event }) {
                   type="submit"
                   className="px-7 py-2 rounded-xl text-sm bg-cyan-950 text-white float-right"
                 >
-                  Update Event
+                  Add Event
                 </button>
               </div>
             </form>
@@ -146,4 +136,4 @@ function UpdateEventModal({ open, close, event }) {
   );
 }
 
-export default UpdateEventModal;
+export default AddEventModal;

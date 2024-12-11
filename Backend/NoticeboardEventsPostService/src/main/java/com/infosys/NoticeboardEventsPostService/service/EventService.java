@@ -11,5 +11,6 @@ public interface EventService {
     public EventResponse addEvent(String jwt, EventDto eventDto) throws EventException;
     public List<Event> getAllEvents() throws EventException;
     public EventResponse updateEvent(Long eventId,EventDto eventDto) throws EventException;
-    public EventResponse deleteEvent(Long eventId);
+    public EventResponse deleteEvent(Long eventId) throws EventException;
+    public Event getEventById(Long eventId) throws EventException;
 }
