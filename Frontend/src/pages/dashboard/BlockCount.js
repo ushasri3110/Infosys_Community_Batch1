@@ -5,7 +5,15 @@ function BlockCount(){
     useEffect(() => {
         const fetchBlockCounts = async () => {
             try {
-                const response = await fetch('http://localhost:8082/getAllFlats');
+                const jwtToken = localStorage.getItem('jwt');
+                const response = await fetch('http://localhost:8082/api/getAllFlats',
+                    {
+                        headers: {
+                            "Authorization": `Bearer ${jwtToken}`,
+                            "Content-Type": "application/json"
+                          }
+                    }
+                );
                 if (!response.ok) throw new Error("Failed to fetch flats");
                 const flats = await response.json();
                 const blockSet = new Set();

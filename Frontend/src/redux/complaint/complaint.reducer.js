@@ -1,3 +1,4 @@
+import { toast, Zoom } from "react-toastify";
 import { 
     CLOSE_COMPLAINT_FAILURE, 
     CLOSE_COMPLAINT_REQUEST, 
@@ -25,6 +26,16 @@ const complaintReducer = (state = initialState, action) => {
             };
         case REGISTER_COMPLAINT_SUCCESS:
         case CLOSE_COMPLAINT_SUCCESS:
+            toast.success(action.payload, {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                theme: "light",
+                transition: Zoom,
+            });
             return {
                 loading: false,
                 message: action.payload,
@@ -32,6 +43,16 @@ const complaintReducer = (state = initialState, action) => {
             };
         case REGISTER_COMPLAINT_FAILURE:
         case CLOSE_COMPLAINT_FAILURE:
+            toast.error(action.payload.error, {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                theme: "light",
+                transition: Zoom,
+            });
             return {
                 loading: false,
                 message: null,

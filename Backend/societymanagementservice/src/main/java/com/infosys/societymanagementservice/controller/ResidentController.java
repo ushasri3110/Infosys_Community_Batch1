@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class ResidentController {
     @Autowired
     ResidentService residentService;
@@ -29,7 +30,7 @@ public class ResidentController {
         return residentService.residentRegistration(residentDto,jwt);
     }
     @GetMapping("/residents")
-    public List<Resident> getResidents(){
+    public List<Resident> getResidents(@RequestHeader("Authorization") String jwt){
         return residentService.getResidents();
     }
 

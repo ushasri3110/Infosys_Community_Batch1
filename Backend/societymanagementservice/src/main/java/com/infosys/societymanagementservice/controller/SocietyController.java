@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class SocietyController {
 
     @Autowired
@@ -25,7 +26,7 @@ public class SocietyController {
     }
 
     @GetMapping("/societies")
-    public List<Society> getAllSocieties(){
+    public List<Society> getAllSocieties(@RequestHeader("Authorization") String jwt){
         return societyService.getAllSocieties();
     }
 

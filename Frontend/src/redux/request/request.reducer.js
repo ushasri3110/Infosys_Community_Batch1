@@ -1,3 +1,4 @@
+import { toast, Zoom } from "react-toastify";
 import { 
     ADD_VENDOR_FAILURE, 
     ADD_VENDOR_REQUEST, 
@@ -25,6 +26,16 @@ const requestReducer = (state = initialState, action) => {
 
         case REQUEST_SERVICE_SUCCESS:
         case ADD_VENDOR_SUCCESS:
+            toast.success(action.payload, {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                theme: "light",
+                transition: Zoom,
+            });
             return {
                 loading: false,
                 message: action.payload, 
@@ -33,6 +44,16 @@ const requestReducer = (state = initialState, action) => {
 
         case REQUEST_SERVICE_FAILURE:
         case ADD_VENDOR_FAILURE:
+            toast.error(action.payload, {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                theme: "light",
+                transition: Zoom,
+            });
             return {
                 loading: false,
                 error: action.payload,
@@ -42,5 +63,4 @@ const requestReducer = (state = initialState, action) => {
             return state;
     }
 };
-
 export default requestReducer;

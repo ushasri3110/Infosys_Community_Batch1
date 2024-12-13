@@ -1,5 +1,6 @@
 package com.infosys.societymanagementservice.service;
 
+import com.infosys.societymanagementservice.config.JwtProvider;
 import com.infosys.societymanagementservice.dto.ResidentDto;
 import com.infosys.societymanagementservice.dto.ResidentProfileDto;
 import com.infosys.societymanagementservice.exception.RegistrationException;
@@ -69,7 +70,7 @@ public class ResidentServiceImplementation implements ResidentService{
 
     @Override
     public Resident getResident(String jwt) {
-        String email=authenticationInterface.getEmailFromJWT(jwt);
+        String email= JwtProvider.getEmailFromJwtToken(jwt);
         return residentRepository.findByEmail(email);
     }
 

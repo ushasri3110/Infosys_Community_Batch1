@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 @FeignClient(name="authentication")
 @Component
 public interface AuthenticationInterface {
-    @GetMapping("/get-email")
+    @GetMapping("/api/get-email")
     public String getEmailFromJWT(@RequestHeader("Authorization") String jwt);
 
 }

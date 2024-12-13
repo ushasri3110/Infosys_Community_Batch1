@@ -24,11 +24,11 @@ public class UserController {
     public AuthResponse login(@RequestBody LoginDto loginDto) throws LoginException {
         return userService.login(loginDto);
     }
-    @GetMapping("/get-email")
+    @GetMapping("api/get-email")
     public String getEmailFromJWT(@RequestHeader("Authorization") String jwt){
         return JwtProvider.getEmailFromJwtToken(jwt);
     }
-    @GetMapping("/get-user")
+    @GetMapping("api/get-user")
     public User getUser(@RequestHeader ("Authorization") String jwt){
         return userService.getUser(jwt);
     }

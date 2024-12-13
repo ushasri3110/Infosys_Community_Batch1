@@ -18,7 +18,15 @@ function EventList() {
     useEffect(() => {
         async function fetchAllEvents() {
             try {
-                const response = await fetch("http://localhost:8084/getAllEvents");
+                const jwtToken = localStorage.getItem('jwt');
+                const response = await fetch("http://localhost:8084/api/getAllEvents",
+                    {
+                        headers: {
+                            "Authorization": `Bearer ${jwtToken}`,
+                            "Content-Type": "application/json"
+                          }
+                    }
+                );
                 const data = await response.json();
                 setEvents(data);
             }
@@ -35,7 +43,7 @@ function EventList() {
         <div className='p-5'>
             {events.map((event) => {
                 return (
-                    <div className='flex bg-white shadow-lg p-3 text-cyan-950' key={event.eventId}>
+                    <div className='flex bg-white shadow-lg p-3 text-cyan-950 mb-5' key={event.eventId}>
                         <div className='flex flex-row space-x-5 w-1/2 cursor-pointer' onClick={() => navigate(`/event-feedback/${event.eventId}`)}>
                             <div><img src={event.eventImage} className='w-[5.5rem] h-[5.5rem]' /></div>
                             <div className='flex flex-col space-y-3 justify-center'>
@@ -45,13 +53,13 @@ function EventList() {
                         </div>
                         <div className='w-1/2 flex flex-col items-end justify-between'>
                             <div className='text-xs'>
-                                <p>{event.eventDate.split('T')[0].replace(/-/g, '/')} - {event.eventDate.split('T')[1].split('.')[0]}</p>
+                                <p>{new Date(event.eventDate).toLocaleString()}</p>
                             </div>
                             {role === "Admin" ?
-                                <div className='flex space-x-5'>
-                                    <button className='text-white bg-cyan-950 rounded-full p-0.5' onClick={handleOpenModal}><ModeRoundedIcon /></button>
+                                <div className='flex space-x-2'>
+                                    <button className='text-white bg-cyan-950 rounded-full h-[1.5rem] w-[1.5rem]' onClick={handleOpenModal}><ModeRoundedIcon fontSize="10px"/></button>
                                     <UpdateEventModal open={openModal} close={handleCloseModal} event={event} />
-                                    <button className='text-white bg-cyan-950 rounded-full p-0.5' onClick={() => deleteEventHandler(event.eventId)}><DeleteRoundedIcon /></button>
+                                    <button className='text-white bg-cyan-950 rounded-full h-[1.5rem] w-[1.5rem]' onClick={() => deleteEventHandler(event.eventId)}><DeleteRoundedIcon fontSize="10px" /></button>
                                 </div> : null}
                         </div>
                     </div>

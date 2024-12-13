@@ -26,7 +26,7 @@ public class AppConfig {
         http.sessionManagement(management -> management
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Stateless session
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/apis/**").authenticated() // Secure "/api/**" endpoints
+                        .requestMatchers("/api/**").authenticated() // Secure "/api/**" endpoints
                         .anyRequest().permitAll()) // Permit all other requests
                 .addFilterBefore(new JwtValidator(), BasicAuthenticationFilter.class)
                 .csrf(csrf -> csrf.disable())

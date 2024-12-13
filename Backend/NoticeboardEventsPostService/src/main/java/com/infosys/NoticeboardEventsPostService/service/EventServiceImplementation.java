@@ -23,7 +23,6 @@ public class EventServiceImplementation implements EventService{
     SocietyManagementInterface societyManagementInterface;
     @Override
     public EventResponse addEvent(String jwt, EventDto eventDto) {
-        System.out.println(eventDto);
         SocietyDto society=societyManagementInterface.getAdminDetails(jwt);
         Event newEvent=new Event();
         newEvent.setEventName(eventDto.getEventName());

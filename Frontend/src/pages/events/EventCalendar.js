@@ -12,7 +12,15 @@ function EventCalendar() {
   useEffect(() => {
     async function fetchAllEvents() {
       try {
-        const response = await fetch('http://localhost:8084/getAllEvents');
+        const jwtToken = localStorage.getItem('jwt');
+        const response = await fetch('http://localhost:8084/api/getAllEvents',
+          {
+            headers: {
+                "Authorization": `Bearer ${jwtToken}`,
+                "Content-Type": "application/json"
+              }
+        }
+        );
         const data = await response.json();
         const formattedEvents = data.map(event => ({
           title: event.eventName,

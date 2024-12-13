@@ -7,7 +7,7 @@ import {
     REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_RESIDENT_FAILURE, REGISTER_RESIDENT_REQUEST, 
     REGISTER_RESIDENT_SUCCESS, REGISTER_SUCCESS 
 } from "./auth.actionType";
-
+import { toast, Zoom } from 'react-toastify';
 const initialState = {
     jwt: null,
     message: null,
@@ -35,6 +35,16 @@ const authReducer = (state = initialState, action) => {
             };
 
         case LOGIN_SUCCESS:
+            toast.success(action.payload.message, {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                theme: "light",
+                transition: Zoom,
+            });
             return { 
                 ...state, 
                 jwt: action.payload.token, 
@@ -45,6 +55,16 @@ const authReducer = (state = initialState, action) => {
             };
 
         case REGISTER_SUCCESS:
+            toast.success("Registration Successful", {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                theme: "light",
+                transition: Zoom,
+            });
             return { 
                 ...state, 
                 jwt: action.payload.token, 
@@ -56,6 +76,16 @@ const authReducer = (state = initialState, action) => {
 
         case REGISTER_ADMIN_SUCCESS:
         case REGISTER_RESIDENT_SUCCESS:
+            toast.success(action.payload, {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                theme: "light",
+                transition: Zoom,
+            });
             return { 
                 ...state, 
                 message: action.payload, 
@@ -88,6 +118,16 @@ const authReducer = (state = initialState, action) => {
         case GET_USER_DETAILS_FAILURE:
         case GET_ADMIN_DETAILS_FAILURE:
         case GET_USER_FAILURE:
+            toast.error(action.payload, {
+                            position: "top-center",
+                            autoClose: 2000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            draggable: true,
+                            theme: "light",
+                            transition: Zoom,
+                        });
             return { 
                 ...state, 
                 loading: false,
@@ -95,7 +135,6 @@ const authReducer = (state = initialState, action) => {
                 message: null,
                 isLogged: false,
             };
-
         case LOGOUT:
             return { 
                 ...initialState 

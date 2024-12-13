@@ -15,7 +15,15 @@ function BlockDetails() {
   useEffect(()=>{
     const fetchTotalFlatsA=async ()=>{
       try{
-        const response=await fetch('http://localhost:8082/getAllFlats');
+        const jwtToken=localStorage.getItem('jwt');
+        const response=await fetch('http://localhost:8082/api/getAllFlats',
+          {
+            headers: {
+                "Authorization": `Bearer ${jwtToken}`,
+                "Content-Type": "application/json"
+              }
+        }
+        );
         const data=await response.json();
         const Acount=data.filter(flat=>flat.flatNo[0]=="A");
         const Bcount=data.filter(flat=>flat.flatNo[0]=="B");
@@ -36,7 +44,15 @@ function BlockDetails() {
     }
     const fetchTotalResidents=async()=>{
       try{
-        const response=await fetch('http://localhost:8082/residents');
+        const jwtToken=localStorage.getItem('jwt');
+        const response=await fetch('http://localhost:8082/api/residents',
+          {
+            headers: {
+                "Authorization": `Bearer ${jwtToken}`,
+                "Content-Type": "application/json"
+              }
+        }
+        );
         const data=await response.json();
         const Acount=data.filter(resident=>resident.flatNo[0]=="A");
         const Bcount=data.filter(resident=>resident.flatNo[0]=="B");

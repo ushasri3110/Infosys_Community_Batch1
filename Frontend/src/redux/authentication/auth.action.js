@@ -49,9 +49,10 @@ function registerAdminDetails(registerDetails) {
     return async function (dispatch) {
       dispatch({ type: REGISTER_ADMIN_REQUEST});
       try {
-        const response = await api.post(`http://localhost:8082/society-register`,registerDetails.data,{
+        const response = await axios.post(`http://localhost:8082/api/society-register`,registerDetails.data,{
           headers:{
             "Authorization":`Bearer ${registerDetails.data.jwt}`,
+            "Content-Type": "application/json"
           }
         });
         const data = response.data;
@@ -66,7 +67,7 @@ function registerAdminDetails(registerDetails) {
       dispatch({ type: REGISTER_RESIDENT_REQUEST });
       console.log("Register Details:", registerDetails);
       try {
-        const response = await api.post(`http://localhost:8082/resident-register`,registerDetails.data,{
+        const response = await axios.post(`http://localhost:8082/api/resident-register`,registerDetails.data,{
           headers:{
             "Authorization":`Bearer ${registerDetails.data.jwt}`,
             "Content-Type": "application/json"
@@ -86,8 +87,9 @@ function registerAdminDetails(registerDetails) {
   function getUserDetails(jwtToken) {
     return async function (dispatch) {
       dispatch({ type: GET_USER_DETAILS_REQUEST });
+      console.log("successful")
       try {
-        const response = await api.get(`http://localhost:8082/getResidentProfile`,{
+        const response = await axios.get(`http://localhost:8082/api/getResidentProfile`,{
           headers: {
             "Authorization": `Bearer ${jwtToken}`,
             "Content-Type": "application/json"
@@ -95,6 +97,7 @@ function registerAdminDetails(registerDetails) {
         });
         const data = response.data;
         dispatch({ type: GET_USER_DETAILS_SUCCESS, payload: data });
+        console.log("successful")
       } catch (error) {
         dispatch({ type: GET_USER_DETAILS_FAILURE, payload: error });
       }
@@ -105,7 +108,7 @@ function registerAdminDetails(registerDetails) {
     return async function (dispatch) {
       dispatch({ type: GET_ADMIN_DETAILS_REQUEST });
       try {
-        const response = await api.get(`http://localhost:8082/get-admin`,{
+        const response = await axios.get(`http://localhost:8082/api/get-admin`,{
           headers: {
             "Authorization": `Bearer ${jwtToken}`,
             "Content-Type": "application/json"
@@ -123,7 +126,7 @@ function registerAdminDetails(registerDetails) {
     return async function (dispatch) {
       dispatch({ type: GET_USER_REQUEST });
       try {
-        const response = await api.get(`http://localhost:8081/get-user`,{
+        const response = await axios.get(`http://localhost:8081/api/get-user`,{
           headers: {
             "Authorization": `Bearer ${jwtToken}`,
             "Content-Type": "application/json"

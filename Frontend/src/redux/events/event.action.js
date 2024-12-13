@@ -9,7 +9,7 @@ function addEvent(formData){
         dispatch({type:ADD_EVENT_REQUEST})
         try{
             const jwtToken=localStorage.getItem("jwt");
-            const response=await axios.post("http://localhost:8084/addEvent",formData,{
+            const response=await axios.post("http://localhost:8084/api/addEvent",formData,{
                 headers: {
                     "Authorization": `Bearer ${jwtToken}`,
                     "Content-Type": "application/json"
@@ -32,10 +32,15 @@ function updateEvent(eventId, formData) {
   
       try {
         const jwtToken = localStorage.getItem("jwt");
-  
         const response = await axios.put(
-          `http://localhost:8084/updateEvent/${eventId}`, 
-          formData);
+          `http://localhost:8084/api/updateEvent/${eventId}`, formData,
+          {
+            headers: {
+                "Authorization": `Bearer ${jwtToken}`,
+                "Content-Type": "application/json"
+              }
+        }
+        );
   
         const data = response.data;
         dispatch({ type: UPDATE_EVENT_SUCCESS, payload: data.message });
@@ -50,7 +55,15 @@ function updateEvent(eventId, formData) {
     return async function(dispatch){
       dispatch({type:DELETE_EVENT_REQUEST})
       try{
-        const response=await axios.delete(`http://localhost:8084/deleteEvent/${eventId}`)
+        const jwtToken=localStorage.getItem("jwt");
+        const response=await axios.delete(`http://localhost:8084/api/deleteEvent/${eventId}`,
+          {
+            headers: {
+                "Authorization": `Bearer ${jwtToken}`,
+                "Content-Type": "application/json"
+              }
+        }
+        )
         const data=response.data;
         dispatch({ type: DELETE_EVENT_SUCCESS, payload: data.message });
       }
@@ -65,9 +78,7 @@ function updateEvent(eventId, formData) {
       dispatch({type:ADD_FEEDBACK_REQUEST})
       try{
         const jwtToken=localStorage.getItem("jwt");
-        console.log(content)
-        console.log(eventId)
-        const response=await axios.post(`http://localhost:8084/addFeedback/${eventId}`,content,
+        const response=await axios.post(`http://localhost:8084/api/addFeedback/${eventId}`,content,
           {
             headers: {
                 "Authorization": `Bearer ${jwtToken}`,

@@ -6,7 +6,15 @@ function SocietyPeopleCount() {
     useEffect(()=>{
         const fetchResidentCount=async ()=>{
             try {
-                const response = await fetch('http://localhost:8082/residents');
+                const jwtToken = localStorage.getItem("jwt");
+                const response = await fetch('http://localhost:8082/api/residents',
+                    {
+                        headers: {
+                            "Authorization": `Bearer ${jwtToken}`,
+                            "Content-Type": "application/json"
+                          }
+                    }
+                );
                 if (!response.ok) throw new Error("Failed to fetch flats");
                 const data = await response.json();
                 setResidentCount(data.length);

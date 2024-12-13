@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api")
 public class VendorController {
     @Autowired
     VendorService vendorService;
@@ -18,7 +19,7 @@ public class VendorController {
         return vendorService.addVendor(jwt,vendorDto);
     }
     @GetMapping("/getAllVendors")
-    public List<Vendor> getAllVendors(){
+    public List<Vendor> getAllVendors(@RequestHeader("Authorization") String jwt){
         return vendorService.getAllVendors();
     }
 }

@@ -11,16 +11,17 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api")
 public class FeedbackController {
 
     @Autowired
     FeedbackService feedbackService;
     @PostMapping("/addFeedback/{eventId}")
-    public FeedbackResponse addFeedback(@RequestBody FeedbackDto feedbackDto, @PathVariable Long eventId){
+    public FeedbackResponse addFeedback(@RequestHeader("Authorization") String jwt,@RequestBody FeedbackDto feedbackDto, @PathVariable Long eventId){
         return feedbackService.addFeedback(feedbackDto,eventId);
     }
     @GetMapping("/getFeedback/{eventId}")
-    public List<Feedback> getFeedbackByEventId(@PathVariable Long eventId){
+    public List<Feedback> getFeedbackByEventId(@RequestHeader("Authorization") String jwt,@PathVariable Long eventId){
         return feedbackService.getFeedbackByEventId(eventId);
     }
 }

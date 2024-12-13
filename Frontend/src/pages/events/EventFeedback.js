@@ -17,7 +17,15 @@ function EventFeedback() {
   useEffect(() => {
     async function fetchEventById() {
       try {
-        const response = await fetch(`http://localhost:8084/getEventById/${eventId}`);
+        const jwtToken = localStorage.getItem('jwt');
+        const response = await fetch(`http://localhost:8084/api/getEventById/${eventId}`,
+          {
+            headers: {
+                "Authorization": `Bearer ${jwtToken}`,
+                "Content-Type": "application/json"
+              }
+        }
+        );
         if (!response.ok) throw new Error('Failed to fetch event details');
         const data = await response.json();
         setEvent(data);

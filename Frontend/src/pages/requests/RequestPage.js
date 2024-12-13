@@ -22,7 +22,15 @@ function RequestPage() {
     useEffect(()=>{
         const fetchVendors = async () => {
             try {
-                const response = await fetch('http://localhost:8083/getAllVendors');
+                const jwtToken = localStorage.getItem('jwt');
+                const response = await fetch('http://localhost:8083/api/getAllVendors',
+                    {
+                        headers: {
+                            "Authorization": `Bearer ${jwtToken}`,
+                            "Content-Type": "application/json"
+                          }
+                    }
+                );
                 const data = await response.json();
                 setVendors(data);
             } catch (error) {

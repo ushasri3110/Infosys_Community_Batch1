@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api")
 public class ComplaintController {
     @Autowired
     ComplaintService complaintService;
@@ -19,12 +20,12 @@ public class ComplaintController {
     }
 
     @GetMapping("/getAllComplaints")
-    public List<Complaint> getAllComplaints(){
+    public List<Complaint> getAllComplaints(@RequestHeader("Authorization") String jwt){
         return complaintService.getAllComplaints();
     }
 
     @PutMapping("/closeComplaint/{id}")
-    public Complaint closeComplaint(@PathVariable Long id){
+    public Complaint closeComplaint(@RequestHeader("Authorization") String jwt,@PathVariable Long id){
         return complaintService.closeComplaint(id);
     }
 }

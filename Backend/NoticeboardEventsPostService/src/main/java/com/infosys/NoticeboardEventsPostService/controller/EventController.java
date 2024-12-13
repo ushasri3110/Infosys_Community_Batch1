@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api")
 public class EventController {
 
     @Autowired
@@ -23,22 +24,22 @@ public class EventController {
     }
 
     @GetMapping("/getAllEvents")
-    public List<Event> getAllEvents() throws EventException{
+    public List<Event> getAllEvents(@RequestHeader("Authorization") String jwt) throws EventException{
         return eventService.getAllEvents();
     }
 
     @PutMapping("updateEvent/{eventId}")
-    public EventResponse updateEvent(@RequestBody EventDto eventDto,@PathVariable Long eventId){
+    public EventResponse updateEvent(@RequestHeader("Authorization") String jwt,@RequestBody EventDto eventDto,@PathVariable Long eventId){
         return eventService.updateEvent(eventId,eventDto);
     }
 
     @DeleteMapping("/deleteEvent/{eventId}")
-    public EventResponse deleteEvent(@PathVariable Long eventId){
+    public EventResponse deleteEvent(@RequestHeader("Authorization") String jwt,@PathVariable Long eventId){
         return eventService.deleteEvent(eventId);
     }
 
     @GetMapping("/getEventById/{eventId}")
-    public Event getEventByEventId(@PathVariable Long eventId){
+    public Event getEventByEventId(@RequestHeader("Authorization") String jwt,@PathVariable Long eventId){
         return eventService.getEventById(eventId);
     }
 }

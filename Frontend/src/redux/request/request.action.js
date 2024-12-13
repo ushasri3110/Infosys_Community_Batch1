@@ -5,7 +5,7 @@ function addVendor(vendorData){
         dispatch({type:ADD_VENDOR_REQUEST})
         try{
             const jwtToken = localStorage.getItem("jwt");
-            const response = await axios.post(`http://localhost:8083/addVendor`, vendorData.data,{
+            const response = await axios.post(`http://localhost:8083/api/addVendor`, vendorData.data,{
                 headers: {
                     "Authorization": `Bearer ${jwtToken}`,
                     "Content-Type": "application/json"
@@ -30,7 +30,15 @@ function requestService(requestData){
             return;
         }
         try{
-            const response = await axios.post(`http://localhost:8083/sendRequest`, requestData.data);
+            const jwtToken = localStorage.getItem("jwt");
+            const response = await axios.post(`http://localhost:8083/api/sendRequest`, requestData.data,
+                {
+                    headers: {
+                        "Authorization": `Bearer ${jwtToken}`,
+                        "Content-Type": "application/json"
+                      }
+                }
+            );
             dispatch({ type: REQUEST_SERVICE_SUCCESS, payload: "Request Sent Successfully" });
         }
         catch(error){

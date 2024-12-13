@@ -21,7 +21,15 @@ function ComplaintPage() {
     useEffect(() => {
         const fetchComplaints = async () => {
             try {
-                const response = await fetch('http://localhost:8083/getAllComplaints');
+                const jwtToken = localStorage.getItem('jwt');
+                const response = await fetch('http://localhost:8083/api/getAllComplaints',
+                    {
+                        headers: {
+                            "Authorization": `Bearer ${jwtToken}`,
+                            "Content-Type": "application/json"
+                          }
+                    }
+                );
                 const data = await response.json();
                 setComplaintsTotal(data.length);
                 const solved = data.filter(c => c.status === "Closed")

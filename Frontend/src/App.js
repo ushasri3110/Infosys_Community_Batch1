@@ -1,8 +1,7 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
 import Register from './pages/authentication/Register';
-import { ToastContainer } from 'react-toastify';
-import Toast from './pages/utilities/Toast';
+import { ToastContainer, toast } from 'react-toastify';
 import HomePage from './pages/homepage/HomePage';
 import MainPage from './pages/main/MainPage';
 import { useDispatch, useSelector } from 'react-redux';
@@ -35,7 +34,6 @@ function App() {
   }, [jwt, isLogged, user]);
   return (
     <div className="">
-      <ToastContainer />
       {jwt ? ( 
         <Routes>
           <Route path="/*" element={<HomePage />} />
@@ -51,7 +49,7 @@ function App() {
           <Route path="/auth/*" element={<Register />} />
         </Routes>
       )}
-      <Toast />
+      <ToastContainer />
     </div>
   );
 }

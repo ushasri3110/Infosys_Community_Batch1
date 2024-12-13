@@ -3,9 +3,10 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Dashboard from "../dashboard/Dashboard";
 import Header from "../../components/header/Header";
 import ComplaintPage from "../complaints/ComplaintPage";
-import { Card } from "@mui/material";
 import RequestPage from "../requests/RequestPage";
 import EventPage from "../events/EventPage";
+import NoticePage from "../notices/NoticePage";
+import PostPage from "../posts/PostPage";
 
 function MainPage() {
     return (
@@ -22,6 +23,8 @@ function MainPage() {
                         <Route path="/complaints" element={<ComplaintPage />} />
                         <Route path="/requestServices" element={<RequestPage/>} />
                         <Route path="/events" element={<EventPage/>}/>
+                        <Route path="/notices" element={<NoticePage/>}/>
+                        <Route path="/posts" element={<PostPage/>}/>
                     </Routes>
                 </div>
             </div>

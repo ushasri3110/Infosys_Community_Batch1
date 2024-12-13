@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class FlatDto {
     private String flatNo;
     private Long societyId;
+    private Long rent;
 }

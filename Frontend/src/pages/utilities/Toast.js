@@ -11,6 +11,10 @@ function Toast() {
     const requestError=useSelector(state=>state.request.error);
     const eventSuccess=useSelector(state=>state.event?.message)
     const eventFailure=useSelector(state=>state.event?.error)
+    const noticeSuccess=useSelector(state=>state.notice?.message)
+    const noticeFailure=useSelector(state=>state.notice?.error)
+    const postSuccess=useSelector(state=>state.post?.message)
+    const postFailure=useSelector(state=>state.post?.error)
     useEffect(() => {
         if (message) {
             toast.success(message, {
@@ -60,7 +64,31 @@ function Toast() {
                 transition: Zoom,
             });
         }
-    }, [message,complaintSuccess,requestSuccess,eventSuccess]);
+        if (noticeSuccess) {
+            toast.success(noticeSuccess, {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                theme: "light",
+                transition: Zoom,
+            });
+        }
+        if (postSuccess) {
+            toast.success(postSuccess, {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                theme: "light",
+                transition: Zoom,
+            });
+        }
+    }, [message,complaintSuccess,requestSuccess,eventSuccess,noticeSuccess,postSuccess]);
     useEffect(() => {
         if (errorMessage) {
             toast.error(errorMessage, {
@@ -110,7 +138,31 @@ function Toast() {
                 transition: Zoom,
             });
         }
-    }, [errorMessage,requestError,complaintError,eventFailure]);
+        if (noticeFailure) {
+            toast.error(noticeFailure, {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                theme: "light",
+                transition: Zoom,
+            });
+        }
+        if (postFailure) {
+            toast.error(postFailure, {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                theme: "light",
+                transition: Zoom,
+            });
+        }
+    }, [errorMessage,requestError,complaintError,eventFailure,postFailure]);
   return (
     <div></div>
   )
