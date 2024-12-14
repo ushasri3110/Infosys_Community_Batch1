@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -21,9 +22,16 @@ public class PaymentController {
         return paymentService.getAllPayments();
     }
 
-    @PostMapping("/makePayment")
-    public Payment makePayment(@RequestHeader("Authorization") String jwt) throws RazorpayException {
+    @PostMapping("/createPayment")
+    public Payment createPayment(@RequestHeader("Authorization") String jwt) throws RazorpayException {
         return paymentService.createPayment(jwt);
+    }
+
+    @PostMapping("/paymentCallback")
+    public String paymentCallback(@RequestBody Map<String,String> response){
+        System.out.println("Callback Response: " + response);
+        paymentService.updateStatus(response);
+        return "Payment is Successful";
     }
 
 }

@@ -23,7 +23,7 @@ function FlatsOccupiedCount() {
             }
         }
         fetchOccupiedCount();
-    })
+    },[])
   return (
          <div className="flex flex-col w-[20%] p-2 space-y-3 bg-sky-200 rounded-md text-sky-600">
             <div className="flex flex-row justify-between items-center">

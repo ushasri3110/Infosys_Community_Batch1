@@ -26,7 +26,7 @@ public class FlatController {
         return flatService.addFlat(flat);
     }
     @GetMapping("/getAllFlats")
-    public List<Flat> getAllFlats(@RequestHeader("Authorization") String jwt){
+    public List<Flat> getAllFlats(){
         return flatService.getAllFlats();
     }
 

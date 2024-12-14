@@ -9,10 +9,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @EnableFeignClients
 public class BillingAndPaymentServiceApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(BillingAndPaymentServiceApplication.class, args);
 		System.out.println("Application is running");
 	}
-
 }

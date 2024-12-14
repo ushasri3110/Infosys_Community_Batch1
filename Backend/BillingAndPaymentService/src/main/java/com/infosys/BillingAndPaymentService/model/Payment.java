@@ -22,5 +22,6 @@ public class Payment {
     private Long amount;
     private Date paymentDate;
     private String status;
+    private String razorpayId;
     private Long societyId;
 }

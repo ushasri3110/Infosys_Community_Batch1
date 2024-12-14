@@ -7,6 +7,8 @@ import RequestPage from "../requests/RequestPage";
 import EventPage from "../events/EventPage";
 import NoticePage from "../notices/NoticePage";
 import PostPage from "../posts/PostPage";
+import BillingPage from "../billings/BillingPage";
+import ParkingPage from "../parking/ParkingPage";
 
 function MainPage() {
     return (
@@ -25,6 +27,8 @@ function MainPage() {
                         <Route path="/events" element={<EventPage/>}/>
                         <Route path="/notices" element={<NoticePage/>}/>
                         <Route path="/posts" element={<PostPage/>}/>
+                        <Route path="/parking" element={<ParkingPage/>}/>
+                        <Route path="/billings" element={<BillingPage/>}/>
                     </Routes>
                 </div>
             </div>

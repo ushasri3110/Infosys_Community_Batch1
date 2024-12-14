@@ -6,20 +6,20 @@ import com.infosys.BillingAndPaymentService.dto.ResidentDto;
 import com.infosys.BillingAndPaymentService.feign.SocietyManagementInterface;
 import com.infosys.BillingAndPaymentService.model.Payment;
 import com.infosys.BillingAndPaymentService.repository.PaymentRepository;
-import com.infosys.BillingAndPaymentService.response.PaymentLinkResponse;
-import com.razorpay.PaymentLink;
+import com.razorpay.Order;
 import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
 import jakarta.annotation.PostConstruct;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PaymentServiceImplementation implements PaymentService{
@@ -41,7 +41,7 @@ public class PaymentServiceImplementation implements PaymentService{
         this.razorpayClient=new RazorpayClient(razorpayId,razorpaySecret);
     }
 
-    @Scheduled(cron = "0 08 17 13 * *", zone = "Asia/Kolkata")
+    @Scheduled(cron = "0 13 18 14 * *", zone = "Asia/Kolkata")
     public void billReminder(){
         List<FlatDto> flats=societyManagementInterface.getAllFlats();
         for (FlatDto flat:flats){
@@ -50,18 +50,34 @@ public class PaymentServiceImplementation implements PaymentService{
                 newPayment.setFlatNo(flat.getFlatNo());
                 newPayment.setSocietyId(flat.getSocietyId());
                 newPayment.setAmount(35000L);
-                newPayment.setStatus("Pending");
+                newPayment.setStatus("PENDING");
                 paymentRepository.save(newPayment);
             }
         }
     }
-
     public List<Payment> getAllPayments(){
-        return paymentRepository.findAll();
+        return paymentRepository.findAllPaymentsOrderedByIdDesc();
     }
 
-    
-
-
-
+    @Override
+    public Payment createPayment(String jwt) throws RazorpayException {
+        ResidentDto resident=societyManagementInterface.getResidentByJWT(jwt);
+        Payment flat=paymentRepository.findByFlatNo(resident.getFlatNo());
+        JSONObject json=new JSONObject();
+        json.put("amount",flat.getAmount()*100);
+        json.put("currency","INR");
+        json.put("receipt",resident.getEmail());
+        Order razorpayOrder=razorpayClient.orders.create(json);
+        flat.setRazorpayId(razorpayOrder.get("id"));
+        flat.setStatus(razorpayOrder.get("status"));
+        return paymentRepository.save(flat);
+    }
+    @Override
+    public void updateStatus(Map<String, String> response) {
+        String razorpayId=response.get("razorpay_order_id");
+        Payment details=paymentRepository.findByRazorpayId(razorpayId);
+        details.setStatus("PAID");
+        details.setPaymentDate(new Date());
+        paymentRepository.save(details);
+    }
 }
