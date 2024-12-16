@@ -40,7 +40,15 @@ function EventFeedback() {
   useEffect(() => {
     async function fetchFeedback() {
       try {
-        const response = await fetch(`http://localhost:8084/getFeedback/${eventId}`);
+        const jwtToken = localStorage.getItem('jwt');
+        const response = await fetch(`http://localhost:8084/api/getFeedback/${eventId}`,
+          {
+            headers: {
+                "Authorization": `Bearer ${jwtToken}`,
+                "Content-Type": "application/json"
+              }
+        }
+        );
         if (!response.ok) throw new Error('Failed to fetch feedbacks');
         const data = await response.json();
         setFeedbacks(data);

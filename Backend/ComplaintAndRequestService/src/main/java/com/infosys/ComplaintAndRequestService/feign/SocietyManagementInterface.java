@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 @FeignClient(name = "societymanagementservice")
 public interface SocietyManagementInterface {
-    @GetMapping("/getResidentByJWT")
+    @GetMapping("/api/getResidentByJWT")
     ResidentDto getResidentByJWT(@RequestHeader("Authorization") String jwt);
-    @GetMapping("/get-admin")
+    @GetMapping("/api/get-admin")
     SocietyDto getAdminDetails(@RequestHeader("Authorization") String jwt);
 }
 

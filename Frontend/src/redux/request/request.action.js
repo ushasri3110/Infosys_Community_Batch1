@@ -14,8 +14,7 @@ function addVendor(vendorData){
             dispatch({ type: ADD_VENDOR_SUCCESS, payload: "Added Vendor Successfully" });
         }
         catch(error){
-            const errorMessage = error.response?.data?.message || "unable to add vendor";
-            dispatch({ type: ADD_VENDOR_FAILURE, payload: errorMessage });
+            dispatch({ type: ADD_VENDOR_FAILURE, payload: "Unable To Add Vendor" });
         }
     }
 }

@@ -26,7 +26,7 @@ function closeComplaint(complaintId){
         dispatch({type:CLOSE_COMPLAINT_REQUEST})
         try{
             const jwtToken = localStorage.getItem("jwt");
-            const response = await axios.put(`http://localhost:8083/api/closeComplaint/${complaintId}`,
+            const response = await axios.put(`http://localhost:8083/api/closeComplaint/${complaintId}`,{},
                 {
                     headers: {
                         "Authorization": `Bearer ${jwtToken}`,
@@ -38,7 +38,7 @@ function closeComplaint(complaintId){
             dispatch({ type: CLOSE_COMPLAINT_SUCCESS, payload: "Complaint Closed Successfully" });
         }
         catch(error){
-            const errorMessage = error.response?.data?.message || "unable to register complaint";
+            const errorMessage = error.response?.data?.message || "Unable To Close Complaint";
             dispatch({ type: CLOSE_COMPLAINT_FAILURE, payload: errorMessage });
         }
     }
