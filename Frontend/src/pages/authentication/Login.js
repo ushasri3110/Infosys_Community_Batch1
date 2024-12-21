@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'; 
 import { Link, useNavigate } from 'react-router-dom';
-import { getUserDetails, loginUserAction } from '../../redux/authentication/auth.action';
+import {loginUserAction } from '../../redux/authentication/auth.action';
 import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {

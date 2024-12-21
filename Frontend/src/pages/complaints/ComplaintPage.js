@@ -1,52 +1,27 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect} from 'react'
 import TotalComplaints from './TotalComplaints'
 import ComplaintsSolved from './ComplaintsSolved'
 import ComplaintsUnsolved from './ComplaintsUnsolved'
 import BlockAComplaints from './BlockAComplaints'
 import BlockBComplaints from './BlockBComplaints'
 import ComplaintForm from './ComplaintForm'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import ComplaintList from './ComplaintList'
 import { Backdrop, CircularProgress } from '@mui/material'
+import { getAllComplaints } from '../../redux/complaint/complaint.action'
 
 function ComplaintPage() {
     const loading = useSelector(store => store.complaint?.loading)
-    const [complaintsTotal, setComplaintsTotal] = useState(0);
-    const [solvedComplaints, setSolvedComplaints] = useState(0);
-    const [unsolvedComplaints, setUnsolvedComplaints] = useState(0);
-    const [complaintsBlockA, setComplaintsBlockA] = useState(0);
-    const [complaintsBlockB, setComplaintsBlockB] = useState(0);
-    const complaint=useSelector(store=>store.complaint?.message)
+    const dispatch=useDispatch();
     const role = useSelector(store => store.auth.user?.role);
+    const complaints=useSelector(store=>store.complaint?.complaints);
+    const solvedComplaints=complaints.filter(c => c.status === "Closed");
+    const unsolvedComplaints=complaints.filter(c => c.status === "Open");
+    const complaintsBlockA=complaints.filter(c => c.flatNo[0] === "A");
+    const complaintsBlockB=complaints.filter(c => c.flatNo[0] === "B");
     useEffect(() => {
-        const fetchComplaints = async () => {
-            try {
-                const jwtToken = localStorage.getItem('jwt');
-                const response = await fetch('http://localhost:8083/api/getAllComplaints',
-                    {
-                        headers: {
-                            "Authorization": `Bearer ${jwtToken}`,
-                            "Content-Type": "application/json"
-                          }
-                    }
-                );
-                const data = await response.json();
-                setComplaintsTotal(data.length);
-                const solved = data.filter(c => c.status === "Closed")
-                setSolvedComplaints(solved.length);
-                const unsolved = data.filter(c => c.status === "Open")
-                setUnsolvedComplaints(unsolved.length);
-                const blockA = data.filter(c => c.flatNo[0] === "A")
-                setComplaintsBlockA(blockA.length);
-                const blockB = data.filter(c => c.flatNo[0] === "B")
-                setComplaintsBlockB(blockB.length);
-            }
-            catch (err) {
-                console.log(err);
-            }
-        }
-        fetchComplaints();
-    }, [])
+        dispatch(getAllComplaints())
+    }, [dispatch])
     return (
         <div className='py-5 gap-2'>
             <Backdrop
@@ -56,19 +31,19 @@ function ComplaintPage() {
             </Backdrop>
             <div className='flex flex-wrap gap-3 justify-center'>
                 <div className="w-1/6">
-                    <TotalComplaints complaintsTotal={complaintsTotal} />
+                    <TotalComplaints complaintsTotal={complaints.length} />
                 </div>
                 <div className="w-1/6">
-                    <ComplaintsSolved solvedComplaints={solvedComplaints} />
+                    <ComplaintsSolved solvedComplaints={solvedComplaints.length} />
                 </div>
                 <div className="w-1/6">
-                    <ComplaintsUnsolved unsolvedComplaints={unsolvedComplaints} />
+                    <ComplaintsUnsolved unsolvedComplaints={unsolvedComplaints.length} />
                 </div>
                 <div className="w-1/6">
-                    <BlockAComplaints complaintsBlockA={complaintsBlockA} />
+                    <BlockAComplaints complaintsBlockA={complaintsBlockA.length} />
                 </div>
                 <div className="w-1/6">
-                    <BlockBComplaints complaintsBlockB={complaintsBlockB} />
+                    <BlockBComplaints complaintsBlockB={complaintsBlockB.length} />
                 </div>
             </div>
             <div className='px-10 py-5 flex flex-col space-y-5'>

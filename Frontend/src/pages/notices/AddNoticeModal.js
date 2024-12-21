@@ -48,7 +48,7 @@ function AddNoticeModal({ open, close }) {
         e.preventDefault();
         const formData = { heading, content, datePosted, noticeImage };
         dispatch(addNotice(formData));
-        close(); // Close the modal after form submission
+        close(); 
         setHeading('');
         setContent('');
         setDatePosted('');
@@ -58,6 +58,13 @@ function AddNoticeModal({ open, close }) {
     return (
         <Modal open={open} onClose={close}>
             <Box sx={style}>
+            <>
+            <Backdrop
+                    sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                    open={isLoading}>
+                    <CircularProgress color="inherit" />
+                  </Backdrop>
+            </>
                 <div className="absolute top-5 right-8 cursor-pointer" onClick={close}>
                     <CloseIcon />
                 </div>

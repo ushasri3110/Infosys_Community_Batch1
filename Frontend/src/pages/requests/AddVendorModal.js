@@ -37,6 +37,13 @@ function AddVendorModal({open,close}) {
         e.preventDefault();
         dispatch(addVendor({ data: formData }));
         close();
+        setFormData({
+          name: "",
+          company:"",
+          service: "",
+          phoneNo:"",
+          email:""
+        })
     };
   return (
     <div className='relative'>

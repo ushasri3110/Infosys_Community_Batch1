@@ -20,6 +20,10 @@ public class SocietyServiceImplementation implements SocietyService{
     AuthenticationInterface authenticationInterface;
     @Override
     public String societyRegistration(AdminDto adminDto, String jwt) throws RegistrationException {
+        List<Society> societies=societyRepository.findAll();
+        if (!societies.isEmpty()){
+            throw new RegistrationException("Invalid Registration For Admin");
+        }
         Society newSociety=new Society();
         newSociety.setName(adminDto.getName());
         newSociety.setPhoneNo(adminDto.getPhoneNo());
@@ -37,6 +41,7 @@ public class SocietyServiceImplementation implements SocietyService{
     public List<Society> getAllSocieties() {
         return societyRepository.findAll();
     }
+
     public Society getSocietyByName(String name) throws RegistrationException {
         Society society=societyRepository.findBySocietyName(name);
         if (society!=null){

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Vendor {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long vendorId;
     private String name;
     private String company;

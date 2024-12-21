@@ -42,7 +42,7 @@ function AddPostModal({ open, close }) {
       setIsLoading(false);
     }
   };
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = {
@@ -51,7 +51,7 @@ function AddPostModal({ open, close }) {
       postImage,
     };
     dispatch(addPost(formData));
-    close();  // Close modal after post submission
+    close();  
     setTitle('');
     setContent('');
     setPostImage('');
@@ -60,6 +60,11 @@ function AddPostModal({ open, close }) {
   return (
     <Modal open={open} onClose={close}>
       <Box sx={style}>
+                    <Backdrop
+                            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                            open={isLoading}>
+                            <CircularProgress color="inherit" />
+                          </Backdrop>
         <div className="absolute top-5 right-8 cursor-pointer" onClick={close}>
           <CloseIcon />
         </div>

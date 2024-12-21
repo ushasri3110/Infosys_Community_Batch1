@@ -2,38 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { makePayment } from '../../redux/billing/billing.action';
 import { Backdrop, CircularProgress } from '@mui/material';
-
 function Billing() {
     const isLoading = useSelector(store => store.billing.loading);
-    const reload = useSelector(store => store.billing.message);
     const flatNo = useSelector(store => store.auth.userDetails?.flatNo);
-    const [payments, setPayments] = useState([]);
+    const payments = useSelector(store => store.billing.billings)||[];
     const [flatBills, setFlatBills] = useState([]); 
     const dispatch = useDispatch();
 
     const handlePayment = () => {
         dispatch(makePayment());
     };
-
-    useEffect(() => {
-        async function getAllPayments() {
-            try {
-                const jwtToken = localStorage.getItem('jwt');
-                const response = await fetch("http://localhost:8085/api/getAllPayments", {
-                    headers: {
-                        "Authorization": `Bearer ${jwtToken}`,
-                        "Content-Type": "application/json"
-                    }
-                });
-                const data = await response.json();
-                setPayments(data);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-        getAllPayments();
-    }, [reload]);
-
+    
     useEffect(() => {
         const filteredBills = payments.filter(payment => payment.flatNo === flatNo && payment.status !== "PAID");
         setFlatBills(filteredBills);
@@ -45,7 +24,7 @@ function Billing() {
                 <CircularProgress color="inherit" />
             </Backdrop>
             
-            {flatBills.length > 0 ? (
+            {flatBills?.length > 0 ? (
                 flatBills.map((bill) => (
                     <div key={bill.flatNo} className='flex flex-col justify-center items-center'>
                         <h1 className="text-lg font-semibold">Monthly Maintenance Bill: ₹{bill.amount}/-</h1>

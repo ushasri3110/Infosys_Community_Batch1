@@ -1,21 +1,21 @@
 import LogoutIcon from '@mui/icons-material/Logout';
 import SidebarMenu from "./SidebarMenu";
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Card } from '@mui/material';
-import { useDispatch } from 'react-redux';
-import LogoutModal from './LogoutModal';
 import { useState } from 'react';
+import LogoutModal from './LogoutModal';
 
 function Sidebar() {
     const location = useLocation();
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     return (
         <div className="static">
@@ -37,13 +37,15 @@ function Sidebar() {
                         <span className="px-4">{item.item}</span>
                     </div>
                 ))}
-                <div className="absolute bottom-5 mx-3 text-cyan-950 cursor-pointer hover:bg-gray-100 px-5 py-2"
-                onClick={handleOpen}>
-                <LogoutIcon />
-                <span className="px-4">Logout</span>
-                <LogoutModal open={open} handleClose={handleClose}/>
+                <div
+                    className="absolute bottom-5 mx-3 text-cyan-950 cursor-pointer hover:bg-gray-100 px-5 py-2"
+                    onClick={handleOpen}
+                >
+                    <LogoutIcon />
+                    <span className="px-4">Logout</span>
+                </div>
             </div>
-            </div>
+            <LogoutModal open={open} handleClose={handleClose} />
         </div>
     );
 }

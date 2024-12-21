@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Request {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long requestId;
     private String address;
     private String description;

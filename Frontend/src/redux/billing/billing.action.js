@@ -1,8 +1,7 @@
-/* global Razorpay */
 import axios from "axios";
-import { GET_PAYMENT_FAILURE, GET_PAYMENT_REQUEST, GET_PAYMENT_SUCCESS } from "./billing.actionType";
+import { GET_BILLINGS_FAILURE, GET_BILLINGS_REQUEST, GET_BILLINGS_SUCCESS, GET_PAYMENT_FAILURE, GET_PAYMENT_REQUEST, GET_PAYMENT_SUCCESS } from "./billing.actionType";
 
-function makePayment() {
+export function makePayment() {
   return async function (dispatch) {
     dispatch({ type: GET_PAYMENT_REQUEST });
     try {
@@ -18,7 +17,6 @@ function makePayment() {
         }
       );
       const data = await response.data;
-
       var options = {
         key: "rzp_test_Ypm4MexzscRQpH",
         amount: data.amount,
@@ -53,15 +51,34 @@ function makePayment() {
           }
         },
       };
-
       var razorpay = new Razorpay(options);
       razorpay.open();
       dispatch({ type: GET_PAYMENT_SUCCESS, payload: data.status });
+      dispatch(getAllBillings());
     } catch (error) {
       dispatch({ type: GET_PAYMENT_FAILURE, payload: error.message });
     }
   };
 }
 
-
-export { makePayment };
+export function getAllBillings(){
+  return async function(dispatch){
+    dispatch({type:GET_BILLINGS_REQUEST})
+    try{
+      const jwtToken=localStorage.getItem("jwt");
+        const response=await axios.get("http://localhost:8085/api/getAllPayments",
+          {
+            headers: {
+                "Authorization": `Bearer ${jwtToken}`,
+                "Content-Type": "application/json"
+              }
+        }
+        )
+        const data=response.data;
+        dispatch({ type: GET_BILLINGS_SUCCESS, payload: data})
+    }
+    catch(error){
+      dispatch({type:GET_BILLINGS_FAILURE, payload: error.message})
+    }
+  }
+}

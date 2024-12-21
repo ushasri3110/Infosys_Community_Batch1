@@ -36,7 +36,6 @@ function EventFeedback() {
     fetchEventById();
   }, [eventId]);
 
-  // Fetch feedbacks
   useEffect(() => {
     async function fetchFeedback() {
       try {

@@ -41,7 +41,7 @@ public class PaymentServiceImplementation implements PaymentService{
         this.razorpayClient=new RazorpayClient(razorpayId,razorpaySecret);
     }
 
-    @Scheduled(cron = "0 13 18 14 * *", zone = "Asia/Kolkata")
+    @Scheduled(cron = "0 55 18 20 * *", zone = "Asia/Kolkata")
     public void billReminder(){
         List<FlatDto> flats=societyManagementInterface.getAllFlats();
         for (FlatDto flat:flats){
@@ -49,7 +49,7 @@ public class PaymentServiceImplementation implements PaymentService{
                 Payment newPayment=new Payment();
                 newPayment.setFlatNo(flat.getFlatNo());
                 newPayment.setSocietyId(flat.getSocietyId());
-                newPayment.setAmount(35000L);
+                newPayment.setAmount(flat.getRent());
                 newPayment.setStatus("PENDING");
                 paymentRepository.save(newPayment);
             }
@@ -69,7 +69,6 @@ public class PaymentServiceImplementation implements PaymentService{
         json.put("receipt",resident.getEmail());
         Order razorpayOrder=razorpayClient.orders.create(json);
         flat.setRazorpayId(razorpayOrder.get("id"));
-        flat.setStatus(razorpayOrder.get("status"));
         return paymentRepository.save(flat);
     }
     @Override

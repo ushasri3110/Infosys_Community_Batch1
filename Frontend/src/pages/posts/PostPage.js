@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { Backdrop, CircularProgress } from '@mui/material';
 import { useSelector } from 'react-redux';
@@ -8,37 +8,16 @@ import PostCard from './PostCard';
 function PostPage() {
   const role = useSelector(store => store.auth.user?.role);
   const [openModal, setOpenModal] = useState(false);
-
   const handleOpenModal = () => {
     setOpenModal(true);
   };
 
   const handleCloseModal = () => {
-    setOpenModal(false);  // Close the modal correctly
+    setOpenModal(false);  
   };
 
   const isLoading = useSelector(store => store.post?.loading);
-  const post = useSelector(store => store.post?.message);
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    async function fetchAllPosts() {
-      try {
-        const jwtToken = localStorage.getItem('jwt');
-        const response = await fetch("http://localhost:8084/api/getAllPosts", {
-          headers: {
-            "Authorization": `Bearer ${jwtToken}`,
-            "Content-Type": "application/json"
-          }
-        });
-        const data = await response.json();
-        setPosts(data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchAllPosts();
-  }, [post]);
+  const posts = useSelector(store => store.post?.posts);
 
   return (
     <div className='p-5'>

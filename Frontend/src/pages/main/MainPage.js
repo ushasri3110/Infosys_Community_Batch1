@@ -9,6 +9,7 @@ import NoticePage from "../notices/NoticePage";
 import PostPage from "../posts/PostPage";
 import BillingPage from "../billings/BillingPage";
 import ParkingPage from "../parking/ParkingPage";
+import ContactsPage from "../contacts/ContactsPage";
 
 function MainPage() {
     return (
@@ -29,6 +30,7 @@ function MainPage() {
                         <Route path="/posts" element={<PostPage/>}/>
                         <Route path="/parking" element={<ParkingPage/>}/>
                         <Route path="/billings" element={<BillingPage/>}/>
+                        <Route path="/emergencyContacts" element={<ContactsPage/>}/>
                     </Routes>
                 </div>
             </div>

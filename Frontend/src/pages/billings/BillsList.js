@@ -1,29 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 
 function BillsList() {
-    const [payments, setPayments] = useState([]);
-    const reload = useSelector(store => store.billing.message);
-
-    useEffect(() => {
-        async function getAllPayments() {
-            try {
-                const jwtToken = localStorage.getItem('jwt');
-                const response = await fetch("http://localhost:8085/api/getAllPayments", {
-                    headers: {
-                        "Authorization": `Bearer ${jwtToken}`,
-                        "Content-Type": "application/json"
-                    }
-                });
-                const data = await response.json();
-                setPayments(data);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-        getAllPayments();
-    }, [reload]);
-
+    const payments=useSelector(store=>store.billing?.billings);
     return (
         <div className='flex flex-col justify-center items-center w-[100%]'>
             <table className="border-collapse w-[80%]">

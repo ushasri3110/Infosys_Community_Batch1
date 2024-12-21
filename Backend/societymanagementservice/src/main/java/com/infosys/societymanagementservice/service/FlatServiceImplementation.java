@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FlatServiceImplementation implements FlatService{
@@ -30,5 +31,12 @@ public class FlatServiceImplementation implements FlatService{
     @Override
     public List<Flat> getAllFlats() {
         return flatRepository.findAll();
+    }
+
+    @Override
+    public Flat updateFlatRent(Long flatId,Long rent) {
+        Flat flat=flatRepository.findById(flatId).get();
+        flat.setRent(rent);
+        return flatRepository.save(flat);
     }
 }

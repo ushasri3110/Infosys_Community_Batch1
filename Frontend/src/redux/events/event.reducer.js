@@ -1,10 +1,11 @@
 import { toast, Zoom } from "react-toastify";
-import { ADD_EVENT_FAILURE, ADD_EVENT_REQUEST, ADD_EVENT_SUCCESS, ADD_FEEDBACK_FAILURE, ADD_FEEDBACK_REQUEST, ADD_FEEDBACK_SUCCESS, DELETE_EVENT_FAILURE, DELETE_EVENT_REQUEST, DELETE_EVENT_SUCCESS, UPDATE_EVENT_FAILURE, UPDATE_EVENT_REQUEST, UPDATE_EVENT_SUCCESS } from "./event.actionType"
+import { ADD_EVENT_FAILURE, ADD_EVENT_REQUEST, ADD_EVENT_SUCCESS, ADD_FEEDBACK_FAILURE, ADD_FEEDBACK_REQUEST, ADD_FEEDBACK_SUCCESS, DELETE_EVENT_FAILURE, DELETE_EVENT_REQUEST, DELETE_EVENT_SUCCESS, GET_EVENTS_FAILURE, GET_EVENTS_REQUEST, GET_EVENTS_SUCCESS, UPDATE_EVENT_FAILURE, UPDATE_EVENT_REQUEST, UPDATE_EVENT_SUCCESS } from "./event.actionType"
 
 const initialState={
     loading:false,
     message:null,
-    error:null
+    error:null,
+    events:[]
 }
 const eventReducer=(state = initialState, action)=>{
     switch(action.type){
@@ -12,7 +13,9 @@ const eventReducer=(state = initialState, action)=>{
         case UPDATE_EVENT_REQUEST:
         case DELETE_EVENT_REQUEST:
         case ADD_FEEDBACK_REQUEST:
+        case GET_EVENTS_REQUEST:
             return{
+                ...state,
                 loading:true,
                 message:null,
                 error:null
@@ -32,10 +35,25 @@ const eventReducer=(state = initialState, action)=>{
                     transition: Zoom,
                 });
                 return{
+                    ...state,
                     loading:false,
                     message:action.payload,
                     error:null
                 }
+                case GET_EVENTS_SUCCESS:
+                    return{
+                        ...state,
+                        loading:false,
+                        message:null,
+                        error:null,
+                        events:action.payload
+                    }
+                case GET_EVENTS_FAILURE:
+                            return {
+                                loading: false,
+                                message: null,
+                                error: action.payload.error,
+                            };
                 case ADD_EVENT_FAILURE:
                 case UPDATE_EVENT_FAILURE:
                 case DELETE_EVENT_FAILURE:
@@ -51,6 +69,7 @@ const eventReducer=(state = initialState, action)=>{
                         transition: Zoom,
                     });
                     return{
+                        ...state,
                         loading:false,
                         message:null,
                         error:action.payload

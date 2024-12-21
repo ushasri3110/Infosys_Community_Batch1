@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-// import "../../static/css/Register.css"; 
 import { useNavigate} from "react-router-dom";
 import { registerResidentDetails } from "../../redux/authentication/auth.action";
 import { useDispatch, useSelector } from "react-redux";
 function ResidentRegister() {
-    const error=useSelector(store=>store.auth.error);
     const [formData, setFormData] = useState({
         name: "",
         phoneNo: "",

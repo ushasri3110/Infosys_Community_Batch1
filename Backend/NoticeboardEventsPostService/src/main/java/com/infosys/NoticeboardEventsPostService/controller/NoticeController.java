@@ -1,14 +1,9 @@
 package com.infosys.NoticeboardEventsPostService.controller;
 
-import com.infosys.NoticeboardEventsPostService.dto.EventDto;
 import com.infosys.NoticeboardEventsPostService.dto.NoticeDto;
-import com.infosys.NoticeboardEventsPostService.exception.EventException;
 import com.infosys.NoticeboardEventsPostService.exception.NoticeException;
-import com.infosys.NoticeboardEventsPostService.model.Event;
 import com.infosys.NoticeboardEventsPostService.model.Notice;
-import com.infosys.NoticeboardEventsPostService.response.EventResponse;
 import com.infosys.NoticeboardEventsPostService.response.NoticeResponse;
-import com.infosys.NoticeboardEventsPostService.service.EventService;
 import com.infosys.NoticeboardEventsPostService.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

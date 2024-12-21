@@ -4,7 +4,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { UploadToCloudinary } from '../utilities/UploadToCloudinary';
 import { useDispatch } from 'react-redux';
-import { updateNotice } from '../../redux/notice/notice.action';
 import { updatePost } from '../../redux/post/post.action';
 
 const style = {

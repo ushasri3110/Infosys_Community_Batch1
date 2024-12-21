@@ -15,14 +15,14 @@ function NoticeCard({ notice }) {
     }
     return (
         <div className='flex bg-white shadow-lg p-3 text-cyan-950 mb-5 border border-gray-200' key={notice.noticeId}>
-            <div className='flex flex-row space-x-5 w-1/2 cursor-pointer' >
+            <div className='flex flex-row space-x-5 w-3/4' >
                 <div><img src={notice.noticeImage} className='w-[5.5rem] h-[5.5rem]' /></div>
                 <div className='flex flex-col space-y-3 justify-center'>
                     <h1 className='font-bold text-md'>{notice.heading}</h1>
                     <p className='text-sm'>{notice.content}</p>
                 </div>
             </div>
-            <div className='w-1/2 flex flex-col items-end justify-between'>
+            <div className='w-1/4 flex flex-col items-end justify-between'>
                 <div className='text-xs'>
                     <p>{new Date(notice.datePosted).toLocaleDateString()}</p>
                 </div>

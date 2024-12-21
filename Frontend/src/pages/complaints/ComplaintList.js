@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeComplaint } from '../../redux/complaint/complaint.action';
+import { closeComplaint, getAllComplaints } from '../../redux/complaint/complaint.action';
 import { Backdrop, CircularProgress } from '@mui/material';
 
 function ComplaintList() {
     const [selectedBlock, setSelectedBlock] = useState("All");
-    const [complaints, setComplaints] = useState([]);
-    const complaint = useSelector(store => store.complaint?.message);
+    const complaints=useSelector(store=>store.complaint?.complaints);
     const dispatch = useDispatch();
     const loading = useSelector((state) => state.complaint?.loading);
     const role=useSelector(store=>store.auth.user?.role);
@@ -20,25 +19,8 @@ function ComplaintList() {
     };
 
     useEffect(() => {
-        const fetchComplaints = async () => {
-            try {
-                const jwtToken = localStorage.getItem('jwt');
-                const response = await fetch('http://localhost:8083/api/getAllComplaints',
-                    {
-                        headers: {
-                            "Authorization": `Bearer ${jwtToken}`,
-                            "Content-Type": "application/json"
-                          }
-                    }
-                );
-                const data = await response.json();
-                setComplaints(data);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-        fetchComplaints();
-    }, [complaint]);
+        dispatch(getAllComplaints())
+    }, [dispatch]);
 
     const sortedComplaints = complaints.sort((a, b) => b.complaintId - a.complaintId);
 

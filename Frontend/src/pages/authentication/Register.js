@@ -4,7 +4,6 @@ import ResidentRegister from './ResidentRegister';
 import SignUp from './SignUp';
 import Login from './Login';
 import { Route, Routes } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 function Register() {
   const jwt=localStorage.getItem('jwt');

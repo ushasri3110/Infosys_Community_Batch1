@@ -66,9 +66,9 @@ public class EmergencyContactServiceImplementation implements EmergencyContactSe
     @Override
     public EmergencyContactResponse deleteContact(Long emergencyId) throws EmergencyContactException {
         if (!emergencyContactRepository.existsById(emergencyId)) {
-            throw new EmergencyContactException("Emergency Contact Not Found");
+            throw new EmergencyContactException("Contact Not Found");
         }
         emergencyContactRepository.deleteById(emergencyId);
-        return new EmergencyContactResponse(null, "Emergency Contact Deleted Successfully");
+        return new EmergencyContactResponse(null, "Contact Deleted Successfully");
     }
 }

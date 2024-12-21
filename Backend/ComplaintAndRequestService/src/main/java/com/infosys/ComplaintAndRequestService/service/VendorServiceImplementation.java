@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VendorServiceImplementation implements VendorService{
@@ -38,4 +39,40 @@ public class VendorServiceImplementation implements VendorService{
     public List<Vendor> getAllVendors() {
         return vendorRepository.findAll();
     }
+
+    @Override
+    public Vendor updateVendor(Long vendorId, VendorDto vendorDto) {
+        Optional<Vendor> vendorOptional = vendorRepository.findById(vendorId);
+        if (vendorOptional.isPresent()) {
+            Vendor existingVendor = vendorOptional.get();
+
+            if (!existingVendor.getName().equals(vendorDto.getName())) {
+                existingVendor.setName(vendorDto.getName());
+            }
+            if (!existingVendor.getService().equals(vendorDto.getService())) {
+                existingVendor.setService(vendorDto.getService());
+            }
+            if (!existingVendor.getCompany().equals(vendorDto.getCompany())) {
+                existingVendor.setCompany(vendorDto.getCompany());
+            }
+            if (!existingVendor.getPhoneNo().equals(vendorDto.getPhoneNo())) {
+                existingVendor.setPhoneNo(vendorDto.getPhoneNo());
+            }
+            if (!existingVendor.getEmail().equals(vendorDto.getEmail())) {
+                existingVendor.setEmail(vendorDto.getEmail());
+            }
+            return vendorRepository.save(existingVendor);
+        }
+        throw new VendorException("Vendor Not Found");
+    }
+
+    @Override
+    public String deleteVendor(Long vendorId) {
+        if (!vendorRepository.existsById(vendorId)) {
+            throw new VendorException("Vendor Not Found");
+        }
+        vendorRepository.deleteById(vendorId);
+        return "Vendor Deleted Successfully";
+    }
+
 }

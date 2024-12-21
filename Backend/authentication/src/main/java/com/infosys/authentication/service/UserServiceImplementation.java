@@ -30,6 +30,12 @@ public class UserServiceImplementation implements UserService{
 
     @Override
     public AuthResponse signUp(User user) throws SignupException {
+        List<User> userList=userRepository.findAll();
+        for (User u:userList){
+            if (u.getRole().equals("Admin")){
+                throw new SignupException("Invalid Registration For Admin");
+            }
+        }
         User isExist=userRepository.findByEmail(user.getEmail());
         if (isExist!=null){
             throw new SignupException("User with email already exist");

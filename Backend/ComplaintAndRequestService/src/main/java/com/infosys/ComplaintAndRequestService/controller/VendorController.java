@@ -22,4 +22,12 @@ public class VendorController {
     public List<Vendor> getAllVendors(@RequestHeader("Authorization") String jwt){
         return vendorService.getAllVendors();
     }
+    @PutMapping("/updateVendor/{vendorId}")
+    public Vendor updateVendor(@PathVariable Long vendorId,@RequestBody VendorDto vendorDto){
+        return vendorService.updateVendor(vendorId,vendorDto);
+    }
+    @DeleteMapping("/deleteVendor/{vendorId}")
+    public String deleteVendor(@RequestHeader("Authorization") String jwt,@PathVariable Long vendorId){
+        return vendorService.deleteVendor(vendorId);
+    }
 }

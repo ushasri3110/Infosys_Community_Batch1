@@ -9,4 +9,5 @@ public interface FlatService {
     Flat addFlat(Flat flat);
     Flat getFlatByFlatNo(String flatNo) throws RegistrationException;
     List<Flat> getAllFlats();
+    Flat updateFlatRent(Long id,Long rent);
 }

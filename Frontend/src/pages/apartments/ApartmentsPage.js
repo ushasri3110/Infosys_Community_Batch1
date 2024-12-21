@@ -2,28 +2,11 @@ import React, { useEffect, useState } from 'react'
 import Header from '../../components/header/Header'
 import ApartmentCard from './ApartmentCard'
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 function ApartmentsPage() {
     const [selectedBlock, setSelectedBlock] = useState("A");
-    const [residents, setResidents] = useState([]);
-    useEffect(() => {
-        const fetchResidents = async () => {
-          try {
-            const jwtToken = localStorage.getItem('jwt');
-            const response = await axios.get('http://localhost:8082/api/residents',{
-              headers:{
-                "Authorization":`Bearer ${jwtToken}`,
-                "Content-Type": "application/json"
-              }
-            });
-            console.log('response',response);
-            setResidents(response.data); 
-          } catch (error) {
-            console.error('Error fetching residents:', error);
-          }
-        };
-        fetchResidents();
-      }, []);
+    const residents=useSelector(store=>store.flats.residents)||[];
 const  handleBlockClick=(block)=>{
     setSelectedBlock(block);
 }
