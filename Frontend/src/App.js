@@ -17,6 +17,8 @@ import { getAllEvents } from './redux/events/event.action';
 import { getAllFlats, getAllResidents } from './redux/flats/flats.action';
 import { getAllBillings } from './redux/billing/billing.action';
 import { getAllContacts } from './redux/contact/contact.action';
+import { getAllNotices } from './redux/notice/notice.action';
+import { getAllPosts } from './redux/post/post.action';
 
 function App() {
   const dispatch = useDispatch();
@@ -48,6 +50,8 @@ function App() {
     dispatch(getAllResidents());
     dispatch(getAllBillings());
     dispatch(getAllContacts());
+    dispatch(getAllNotices());
+    dispatch(getAllPosts())
   },[jwt,isLogged])
   return (
     <div className="">

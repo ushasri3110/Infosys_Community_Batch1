@@ -33,7 +33,6 @@ function RequestForm({ vendorId }) {
         open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
-
       <div className="flex flex-row items-center">
         <div className="w-1/2">
           <h1 className="pb-5 font-bold text-xl">Service Request Details</h1>

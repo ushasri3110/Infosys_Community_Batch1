@@ -3,7 +3,6 @@ import RequestForm from './RequestForm';
 import TotalVendors from './TotalVendors';
 import AddVendorModal from './AddVendorModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { Backdrop, CircularProgress } from '@mui/material';
 import ModeRoundedIcon from '@mui/icons-material/ModeRounded';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import UpdateVendorModal from './UpdateVendorModal';
@@ -45,12 +44,6 @@ function RequestPage() {
 
     return (
         <div className="p-5 w-[100%]">
-            <Backdrop
-                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                open={loading}
-            >
-                <CircularProgress color="inherit" />
-            </Backdrop>
             <h1 className="font-bold text-xl">Select Service Type</h1>
             <div className="flex flex-row space-x-5 my-5 flex-wrap">
                 {vendors.map((vendor) => (

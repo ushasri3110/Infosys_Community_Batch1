@@ -14,23 +14,34 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EmergencyContactServiceImplementation implements EmergencyContactService{
+public class EmergencyContactServiceImplementation implements EmergencyContactService {
+
     @Autowired
     EmergencyContactRepository emergencyContactRepository;
+
     @Autowired
     SocietyManagementInterface societyManagementInterface;
+
+    private static final String PHONE_NUMBER_REGEX = "^[6-9]\\d{9}$";
+
     @Override
     public EmergencyContactResponse addContact(EmergencyContactDto emergencyContactDto, String jwt) throws EmergencyContactException {
-        SocietyDto societyDto=societyManagementInterface.getAdminDetails(jwt);
-        EmergencyContact contact=new EmergencyContact();
+        // Validate phone number
+        if (!emergencyContactDto.getPhoneNo().matches(PHONE_NUMBER_REGEX)) {
+            throw new EmergencyContactException("Invalid Phone Number");
+        }
+
+        SocietyDto societyDto = societyManagementInterface.getAdminDetails(jwt);
+        EmergencyContact contact = new EmergencyContact();
         contact.setPersonName(emergencyContactDto.getPersonName());
         contact.setBlock(emergencyContactDto.getBlock());
         contact.setPhoneNo(emergencyContactDto.getPhoneNo());
         contact.setServiceType(emergencyContactDto.getServiceType());
         contact.setSocietyId(societyDto.getSocietyId());
-        EmergencyContact savedContact=emergencyContactRepository.save(contact);
-        if (savedContact.getEmergencyId()!=null){
-            return new EmergencyContactResponse(savedContact,"Contact Added Successfully");
+
+        EmergencyContact savedContact = emergencyContactRepository.save(contact);
+        if (savedContact.getEmergencyId() != null) {
+            return new EmergencyContactResponse(savedContact, "Contact Added Successfully");
         }
         throw new EmergencyContactException("Unable To Add Contact");
     }
@@ -42,9 +53,15 @@ public class EmergencyContactServiceImplementation implements EmergencyContactSe
 
     @Override
     public EmergencyContactResponse updateContact(EmergencyContactDto emergencyContactDto, Long emergencyId) throws EmergencyContactException {
+        // Validate phone number
+        if (!emergencyContactDto.getPhoneNo().matches(PHONE_NUMBER_REGEX)) {
+            throw new EmergencyContactException("Invalid Phone Number: Must be a 10-digit number starting with 6-9.");
+        }
+
         Optional<EmergencyContact> emergencyContact = emergencyContactRepository.findById(emergencyId);
         if (emergencyContact.isPresent()) {
             EmergencyContact existingContact = emergencyContact.get();
+
             if (!existingContact.getPersonName().equals(emergencyContactDto.getPersonName())) {
                 existingContact.setPersonName(emergencyContactDto.getPersonName());
             }

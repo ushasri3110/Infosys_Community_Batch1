@@ -64,6 +64,7 @@ export function registerAdminDetails(registerDetails) {
             dispatch(getAllFlats());
             dispatch(getAllResidents());
         } catch (error) {
+            
             dispatch({ type: REGISTER_ADMIN_FAILURE, payload: error });
         }
     };

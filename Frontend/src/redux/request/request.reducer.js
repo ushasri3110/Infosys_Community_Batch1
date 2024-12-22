@@ -35,8 +35,7 @@ const requestReducer = (state = initialState, action) => {
                 ...state,
                 loading: true,
                 message: null,
-                error: null,
-                vendors:[]
+                error: null
             };
 
         case REQUEST_SERVICE_SUCCESS:
@@ -67,6 +66,7 @@ const requestReducer = (state = initialState, action) => {
             }
         case GET_VENDORS_FAILURE:
                     return {
+                        ...state, 
                         loading: false,
                         message: null,
                         error: action.payload.error,

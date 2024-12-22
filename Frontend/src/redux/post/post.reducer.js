@@ -56,6 +56,7 @@ const postReducer = (state = initialState, action) => {
             };
         case GET_POSTS_FAILURE:
                     return {
+                        ...state, 
                         loading: false,
                         message: null,
                         error: action.payload.error,

@@ -27,6 +27,4 @@ public class Resident {
     private Long flatId;
     private Long societyId;
     private String role;
-
-
 }

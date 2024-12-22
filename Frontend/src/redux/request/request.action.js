@@ -99,6 +99,7 @@ export function deleteVendor(vendorId){
       }
       catch(error){
         dispatch({type: DELETE_VENDOR_FAILURE, payload: error.message})
+        
       }
     }
   }

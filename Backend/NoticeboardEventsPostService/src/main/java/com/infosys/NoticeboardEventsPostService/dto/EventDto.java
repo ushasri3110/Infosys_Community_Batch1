@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -11,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class EventDto {
     private String eventName;
-    private Date eventDate;
+    private LocalDateTime eventDate;
     private String eventDetails;
     private String eventImage;
 }

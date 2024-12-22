@@ -27,10 +27,14 @@ public class RequestServiceImplementation implements RequestService {
 
     @Override
     public String sendRequest(RequestDto requestDto) throws RequestException {
+        if (!isValidPhoneNumber(requestDto.getPhoneNo())) {
+            throw new RequestException("Invalid phone number");
+        }
         Optional<Vendor> vendorOptional = vendorRepository.findById(requestDto.getVendorId());
         if (vendorOptional.isEmpty()) {
             throw new RequestException("Vendor with ID " + requestDto.getVendorId() + " not found.");
         }
+
         Vendor vendor = vendorOptional.get();
         String emailBody = createRequestBody(requestDto);
         String subject = vendor.getService();
@@ -38,6 +42,7 @@ public class RequestServiceImplementation implements RequestService {
         boolean isEmailSent = sendEmail(recipientEmail, emailBody, subject);
 
         if (isEmailSent) {
+            // Save the request in the database
             Request newRequest = new Request();
             newRequest.setAddress(requestDto.getAddress());
             newRequest.setDescription(requestDto.getDescription());
@@ -70,5 +75,11 @@ public class RequestServiceImplementation implements RequestService {
                 "Address: " + requestDto.getAddress() + "\n" +
                 "Description: " + requestDto.getDescription() + "\n" +
                 "Phone No: " + requestDto.getPhoneNo();
+    }
+
+    private boolean isValidPhoneNumber(String phoneNo) {
+        // Regex to match valid phone numbers (e.g., 10 digits, allows country code)
+        String phoneRegex = "^(\\+\\d{1,3}[- ]?)?\\d{10}$";
+        return phoneNo != null && phoneNo.matches(phoneRegex);
     }
 }

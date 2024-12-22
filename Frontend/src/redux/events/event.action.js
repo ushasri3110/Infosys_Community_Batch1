@@ -36,6 +36,7 @@ export function updateEvent(eventId, formData) {
   
       try {
         const jwtToken = localStorage.getItem("jwt");
+        console.log(formData)
         const response = await axios.put(
           `http://localhost:8084/api/updateEvent/${eventId}`, formData,
           {

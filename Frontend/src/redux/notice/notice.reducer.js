@@ -48,6 +48,7 @@ const noticeReducer = (state = initialState, action) => {
             };
         case GET_NOTICES_FAILURE:
                     return {
+                        ...state, 
                         loading: false,
                         message: null,
                         error: action.payload.error,

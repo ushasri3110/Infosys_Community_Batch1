@@ -25,11 +25,11 @@ public class EmergencyContactController {
         return emergencyContactService.getAllContacts();
     }
     @PutMapping("/updateContact/{emergencyId}")
-    public EmergencyContactResponse updateContact(@RequestHeader("Authorization") String jwt,@RequestBody EmergencyContactDto emergencyContactDto,@PathVariable Long emergencyId){
+    public EmergencyContactResponse updateContact(@RequestHeader("Authorization") String jwt,@RequestBody EmergencyContactDto emergencyContactDto,@PathVariable Long emergencyId) throws EmergencyContactException{
         return emergencyContactService.updateContact(emergencyContactDto,emergencyId);
     }
     @DeleteMapping("/deleteContact/{emergencyId}")
-    public EmergencyContactResponse deleteContact(@RequestHeader("Authorization") String jwt,@PathVariable Long emergencyId){
+    public EmergencyContactResponse deleteContact(@RequestHeader("Authorization") String jwt,@PathVariable Long emergencyId) throws EmergencyContactException{
         return emergencyContactService.deleteContact(emergencyId);
     }
 }

@@ -21,7 +21,6 @@ const style = {
     justifyContent:"center",
   };
 function UpdateVendorModal({open,close,vendor}) {
-    console.log(vendor)
     const loading=useSelector(store=>store.request.loading);
     const [formData, setFormData] = useState({
         name: "",
@@ -59,11 +58,6 @@ function UpdateVendorModal({open,close,vendor}) {
     };
   return (
     <div className='relative'>
-     <Backdrop
-        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={loading}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
     <Modal open={open} onClose={close}>
         <Box sx={style}>
             <div className='absolute top-5 right-8 cursor-pointer' onClick={close}><CloseIcon/></div>
