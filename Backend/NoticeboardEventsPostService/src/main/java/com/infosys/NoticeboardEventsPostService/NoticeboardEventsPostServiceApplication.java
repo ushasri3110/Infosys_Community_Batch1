@@ -17,7 +17,5 @@ public class NoticeboardEventsPostServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(NoticeboardEventsPostServiceApplication.class, args);
 		System.out.println("Application is running");
-
 	}
-
 }

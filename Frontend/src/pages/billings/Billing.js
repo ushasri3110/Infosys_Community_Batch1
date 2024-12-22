@@ -5,19 +5,18 @@ import { Backdrop, CircularProgress } from '@mui/material';
 function Billing() {
     const isLoading = useSelector(store => store.billing.loading);
     const flatNo = useSelector(store => store.auth.userDetails?.flatNo);
-    const payments = useSelector(store => store.billing.billings)||[];
+    const societyId=useSelector(store=>store.auth.userDetails?.societyId)
+    const allPayments = useSelector(store => store.billing.billings)||[];
+    const payments = allPayments?.filter(payment => payment.societyId === societyId);
     const [flatBills, setFlatBills] = useState([]); 
     const dispatch = useDispatch();
-
     const handlePayment = () => {
         dispatch(makePayment());
     };
-    
     useEffect(() => {
         const filteredBills = payments.filter(payment => payment.flatNo === flatNo && payment.status !== "PAID");
         setFlatBills(filteredBills);
-    }, [payments, flatNo]);
-
+    }, []);
     return (
         <div>
             <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={isLoading}>

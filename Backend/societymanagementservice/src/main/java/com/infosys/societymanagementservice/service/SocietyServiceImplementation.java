@@ -20,9 +20,9 @@ public class SocietyServiceImplementation implements SocietyService{
     AuthenticationInterface authenticationInterface;
     @Override
     public String societyRegistration(AdminDto adminDto, String jwt) throws RegistrationException {
-        List<Society> societies=societyRepository.findAll();
-        if (!societies.isEmpty()){
-            throw new RegistrationException("Invalid Registration For Admin");
+        Society society=societyRepository.findBySocietyName(adminDto.getSocietyName());
+        if (society!=null){
+            throw new RegistrationException("Society Already Exist");
         }
         Society newSociety=new Society();
         newSociety.setName(adminDto.getName());

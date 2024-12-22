@@ -7,7 +7,6 @@ import { Backdrop, CircularProgress } from '@mui/material'
 function BillingPage() {
   const role = useSelector(store => store.auth.user?.role)
   const loading = useSelector(store => store.billing.loading)
-
   return (
     <div className='h-[85%] flex flex-col justify-center items-center'>
       <Backdrop

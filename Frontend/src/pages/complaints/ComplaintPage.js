@@ -12,9 +12,11 @@ import { getAllComplaints } from '../../redux/complaint/complaint.action'
 
 function ComplaintPage() {
     const loading = useSelector(store => store.complaint?.loading)
+    const societyId=useSelector(store=>store.auth.userDetails?.societyId)
     const dispatch=useDispatch();
     const role = useSelector(store => store.auth.user?.role);
-    const complaints=useSelector(store=>store.complaint?.complaints);
+    const allComplaints=useSelector(store=>store.complaint?.complaints);
+    const complaints=allComplaints?.filter(c => c.societyId === societyId);
     const solvedComplaints=complaints.filter(c => c.status === "Closed");
     const unsolvedComplaints=complaints.filter(c => c.status === "Open");
     const complaintsBlockA=complaints.filter(c => c.flatNo[0] === "A");
@@ -53,5 +55,4 @@ function ComplaintPage() {
         </div>
     )
 }
-
 export default ComplaintPage

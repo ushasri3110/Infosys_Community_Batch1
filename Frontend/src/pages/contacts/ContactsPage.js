@@ -6,7 +6,9 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import AddContactModal from './AddContactModal';
 
 function ContactsPage() {
-    const contacts=useSelector(store=>store.contact.contacts);
+    const societyId=useSelector(store=>store.auth.userDetails?.societyId)
+    const allContacts=useSelector(store=>store.contact?.contacts);
+    const contacts=allContacts?.filter(contact=>contact.societyId===societyId)
     const [open,setOpen]=useState(false)
     const [blockAContacts, setBlockAContacts] = useState([]);
     const [blockBContacts, setBlockBContacts] = useState([]);

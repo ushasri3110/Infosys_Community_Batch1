@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface FlatService {
     Flat addFlat(Flat flat);
-    Flat getFlatByFlatNo(String flatNo) throws RegistrationException;
+    public Flat getFlatByFlatNoAndSocietyId(String flatNo, Long societyId) throws RegistrationException;
     List<Flat> getAllFlats();
     Flat updateFlatRent(Long id,Long rent);
 }

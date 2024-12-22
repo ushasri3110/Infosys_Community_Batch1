@@ -1,8 +1,11 @@
 package com.infosys.societymanagementservice.controller;
 
+import com.infosys.societymanagementservice.config.JwtProvider;
 import com.infosys.societymanagementservice.dto.FlatDto;
 import com.infosys.societymanagementservice.exception.RegistrationException;
 import com.infosys.societymanagementservice.model.Flat;
+import com.infosys.societymanagementservice.model.Society;
+import com.infosys.societymanagementservice.repository.SocietyRepository;
 import com.infosys.societymanagementservice.service.FlatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,15 +17,17 @@ import java.util.List;
 public class FlatController {
 
     @Autowired
+    SocietyRepository societyRepository;
+    @Autowired
     FlatService flatService;
     @PostMapping("/addFlat")
     public Flat addFlat(@RequestHeader("Authorization") String jwt,@RequestBody FlatDto flatDto){
+        String email= JwtProvider.getEmailFromJwtToken(jwt);
+        Society society=societyRepository.findByEmail(email);
         Flat flat=new Flat();
         flat.setFlatNo(flatDto.getFlatNo());
-        flat.setSocietyId(flatDto.getSocietyId());
         flat.setOccupied(false);
-        flat.setRent(flatDto.getRent());
-        System.out.println("Flat values"+flat);
+        flat.setSocietyId(society.getSocietyId());
         return flatService.addFlat(flat);
     }
     @GetMapping("/getAllFlats")
@@ -30,8 +35,8 @@ public class FlatController {
         return flatService.getAllFlats();
     }
 
-    @GetMapping("/flatByFlatNo")
-    public Flat getFlatByFlatNo(@RequestHeader("Authorization") String jwt,@RequestParam String flatNo) throws RegistrationException {
-        return flatService.getFlatByFlatNo(flatNo);
-    }
+//    @GetMapping("/flatByFlatNo")
+//    public Flat getFlatByFlatNo(@RequestHeader("Authorization") String jwt,@RequestParam String flatNo) throws RegistrationException {
+//        return flatService.getFlatByFlatNo(flatNo);
+//    }
 }

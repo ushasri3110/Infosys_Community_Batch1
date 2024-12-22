@@ -2,7 +2,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 function BillsList() {
-    const payments=useSelector(store=>store.billing?.billings);
+        const societyId=useSelector(store=>store.auth.userDetails?.societyId)
+        const allPayments = useSelector(store => store.billing.billings)||[];
+        const payments = allPayments?.filter(payment => payment.societyId === societyId);
     return (
         <div className='flex flex-col justify-center items-center w-[100%]'>
             <table className="border-collapse w-[80%]">

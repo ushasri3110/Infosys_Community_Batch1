@@ -15,9 +15,10 @@ function PostPage() {
   const handleCloseModal = () => {
     setOpenModal(false);  
   };
-
+  const societyId=useSelector(store=>store.auth.userDetails?.societyId)
   const isLoading = useSelector(store => store.post?.loading);
-  const posts = useSelector(store => store.post?.posts);
+  const allPosts = useSelector(store => store.post?.posts);
+  const posts = allPosts?.filter(post => post.societyId === societyId);
 
   return (
     <div className='p-5'>

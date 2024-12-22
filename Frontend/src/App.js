@@ -19,6 +19,7 @@ import { getAllBillings } from './redux/billing/billing.action';
 import { getAllContacts } from './redux/contact/contact.action';
 import { getAllNotices } from './redux/notice/notice.action';
 import { getAllPosts } from './redux/post/post.action';
+import AddFlatsForm from './pages/flats/AddFlatsForm';
 
 function App() {
   const dispatch = useDispatch();
@@ -59,6 +60,7 @@ function App() {
         <Routes>
           <Route path="/*" element={<HomePage />} />
           <Route path="/auth/*" element={<Register />} />
+          <Route path="/addFlats" element={<AddFlatsForm/>}/>
           <Route path="/community/*" element={<MainPage />} />
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/apartment" element={<ApartmentsPage />} />

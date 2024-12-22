@@ -1,7 +1,9 @@
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import {useSelector } from 'react-redux';
 function FlatCount() {
-    const flats=useSelector(store=>store.flats?.flats)
+    const societyId=useSelector(store=>store.auth.userDetails?.societyId)
+    const allFlats=useSelector(store=>store.flats?.flats)
+    const flats=allFlats?.filter(flat => flat.societyId === societyId);
   return (
     <div className="flex flex-col w-[20%] p-2 space-y-3 bg-blue-300 rounded-md text-blue-600">
             <div className="flex flex-row justify-between items-center">

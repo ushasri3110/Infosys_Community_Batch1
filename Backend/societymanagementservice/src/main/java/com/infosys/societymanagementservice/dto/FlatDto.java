@@ -9,6 +9,4 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class FlatDto {
     private String flatNo;
-    private Long societyId;
-    private Long rent;
 }

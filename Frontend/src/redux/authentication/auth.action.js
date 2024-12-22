@@ -34,7 +34,6 @@ export function registerUserAction(loginData) {
         try {
             const response = await axios.post(`http://localhost:8081/auth/signup`, loginData.data);
             const data = response.data;
-            console.log(data.token);
             if (data.token) {
                 localStorage.setItem("jwt", data.token);
             }
@@ -73,7 +72,6 @@ export function registerAdminDetails(registerDetails) {
 export function registerResidentDetails(registerDetails) {
     return async function (dispatch) {
         dispatch({ type: REGISTER_RESIDENT_REQUEST });
-        console.log("Register Details:", registerDetails);
         try {
             const response = await axios.post(`http://localhost:8082/api/resident-register`, registerDetails.data, {
                 headers: {
@@ -87,6 +85,7 @@ export function registerResidentDetails(registerDetails) {
             dispatch(getAllFlats());
             return { success: true };
         } catch (error) {
+            console.log(error)
             const errorMessage = error.response?.data.message || "Registration failed";
             dispatch({ type: REGISTER_RESIDENT_FAILURE, payload: errorMessage });
             return { success: false, error: errorMessage };
@@ -97,7 +96,6 @@ export function registerResidentDetails(registerDetails) {
 export function getUserDetails(jwtToken) {
     return async function (dispatch) {
         dispatch({ type: GET_USER_DETAILS_REQUEST });
-        console.log("successful");
         try {
             const response = await axios.get(`http://localhost:8082/api/getResidentProfile`, {
                 headers: {

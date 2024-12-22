@@ -6,15 +6,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import ModeRoundedIcon from '@mui/icons-material/ModeRounded';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import UpdateVendorModal from './UpdateVendorModal';
-import { deleteVendor} from '../../redux/request/request.action';
+import { deleteVendor } from '../../redux/request/request.action';
 
 function RequestPage() {
-    const vendors=useSelector(store=>store.request?.vendors)
+    const societyId = useSelector(store => store.auth.userDetails?.societyId)
+    const allVendors = useSelector(store => store.request?.vendors)
+    const vendors = allVendors?.filter(vendor => vendor.societyId === societyId);
     const [openModal, setOpenModal] = useState(false);
     const [vendorId, setVendorId] = useState();
     const [selectedVendor, setSelectedVendor] = useState(null);
     const [openUpdateModal, setOpenUpdateModal] = useState(false);
-    const dispatch=useDispatch();
+    const dispatch = useDispatch();
     const role = useSelector((store) => store.auth.user?.role);
     const loading = useSelector((state) => state.request?.loading);
 
@@ -33,7 +35,7 @@ function RequestPage() {
 
     const handleCloseUpdateModal = () => {
         setOpenUpdateModal(false);
-        setSelectedVendor(null); 
+        setSelectedVendor(null);
     };
 
     const handleBlockClick = (block) => setVendorId(block);
@@ -46,20 +48,24 @@ function RequestPage() {
         <div className="p-5 w-[100%]">
             <h1 className="font-bold text-xl">Select Service Type</h1>
             <div className="flex flex-row space-x-5 my-5 flex-wrap">
-                {vendors.map((vendor) => (
-                    <button
-                        key={vendor.vendorId}
-                        className={`px-6 py-2 rounded-3xl text-sm font-semibold shadow-md ${
-                            vendorId === vendor.vendorId
-                                ? 'bg-cyan-950 text-white'
-                                : 'bg-white text-cyan-950'
-                        }`}
-                        onClick={() => handleBlockClick(vendor.vendorId)}
-                    >
-                        {vendor.service}
-                    </button>
-                ))}
+                {vendors.length > 0 ? (
+                    vendors.map((vendor) => (
+                        <button
+                            key={vendor.vendorId}
+                            className={`px-6 py-2 rounded-3xl text-sm font-semibold shadow-md ${vendorId === vendor.vendorId
+                                    ? 'bg-cyan-950 text-white'
+                                    : 'bg-white text-cyan-950'
+                                }`}
+                            onClick={() => handleBlockClick(vendor.vendorId)}
+                        >
+                            {vendor.service}
+                        </button>
+                    ))
+                ) : (
+                    <div className="text-gray-500 font-medium">No services available</div>
+                )}
             </div>
+
             <RequestForm vendorId={vendorId} />
             <TotalVendors totalVendors={vendors.length} />
             <div className="flex flex-row justify-between items-center">

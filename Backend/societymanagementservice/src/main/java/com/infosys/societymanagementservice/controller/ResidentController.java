@@ -26,7 +26,7 @@ public class ResidentController {
     @PostMapping("/resident-register")
     public String residentRegistration(@RequestHeader("Authorization") String jwt, @RequestBody ResidentDto residentDto) throws RegistrationException {
         System.out.println("Received JWT: " + jwt);
-        System.out.println("Admin Details DTO: " + residentDto);
+        System.out.println("Resident Details DTO: " + residentDto);
         return residentService.residentRegistration(residentDto,jwt);
     }
     @GetMapping("/residents")
@@ -35,7 +35,7 @@ public class ResidentController {
     }
 
     @GetMapping("/getResidentProfile")
-    public ResidentProfileDto getResidentProfile(@RequestHeader("Authorization") String jwt){
+    public Resident getResidentProfile(@RequestHeader("Authorization") String jwt){
         return residentService.getResidentProfile(jwt);
     }
 

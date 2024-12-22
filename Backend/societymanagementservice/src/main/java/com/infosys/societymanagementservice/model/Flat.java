@@ -23,6 +23,4 @@ public class Flat {
     private boolean occupied;
     private Long rent;
     private Long societyId;
-
-
 }

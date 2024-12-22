@@ -5,7 +5,9 @@ import { Backdrop, CircularProgress } from '@mui/material';
 
 function ComplaintList() {
     const [selectedBlock, setSelectedBlock] = useState("All");
-    const complaints=useSelector(store=>store.complaint?.complaints);
+    const societyId=useSelector(store=>store.auth.userDetails?.societyId)
+    const allComplaints=useSelector(store=>store.complaint?.complaints);
+    const complaints=allComplaints.filter(complaint=>complaint.societyId===societyId)
     const dispatch = useDispatch();
     const loading = useSelector((state) => state.complaint?.loading);
     const role=useSelector(store=>store.auth.user?.role);

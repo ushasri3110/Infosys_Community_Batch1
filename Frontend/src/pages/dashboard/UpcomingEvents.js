@@ -4,7 +4,9 @@ import { Card } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 function UpcomingEvents() {
-  const events=useSelector(store=>store.event?.events)
+  const societyId=useSelector(store=>store.auth.userDetails?.societyId)
+  const allEvents=useSelector(store=>store.event?.events)
+  const events=allEvents?.filter(event=>event.societyId===societyId); 
   const today = new Date(); 
   const upcomingEventsCount = events?.filter(event => {
     const eventDate = new Date(event.eventDate);

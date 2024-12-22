@@ -14,4 +14,5 @@ public class ResidentProfileDto {
     private String societyName;
     private String flatNo;
     private String email;
+    private Long societyId;
 }

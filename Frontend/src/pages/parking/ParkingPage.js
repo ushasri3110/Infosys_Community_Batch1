@@ -6,9 +6,11 @@ import ParkingList from './ParkingList';
 import { useSelector } from 'react-redux';
 
 function ParkingPage() {
-    const parking = useSelector(store => store.parking.parkings) || [];
-    const flats = useSelector(store => store.flats.flats) || [];
-
+    const societyId=useSelector(store=>store.auth.userDetails?.societyId)
+    const allParking = useSelector(store => store.parking.parkings) || [];
+    const parking = allParking?.filter(parking => parking.societyId === societyId);
+    const allFlats = useSelector(store => store.flats.flats) || [];
+    const flats = allFlats?.filter(flat => flat.societyId === societyId);
     const occupiedFlats = flats.filter(flat => flat.occupied === true);
     const unoccupiedFlats = flats.filter(flat => flat.occupied === false);
 

@@ -8,7 +8,9 @@ import { useSelector } from 'react-redux';
 
 function EventCalendar() {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const eventsData = useSelector((store) => store.event?.events) || [];
+  const societyId=useSelector(store=>store.auth.userDetails?.societyId)
+  const allEventsData = useSelector((store) => store.event?.events) || [];
+  const eventsData=allEventsData.filter(event => event.societyId===societyId)
   const formattedEvents = eventsData.map((event) => ({
     title: event.eventName,
     start: new Date(event.eventDate),

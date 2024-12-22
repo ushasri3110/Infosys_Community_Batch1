@@ -6,7 +6,9 @@ import UpdateEventModal from './UpdateEventModal';
 import { deleteEvent} from '../../redux/events/event.action';
 import { useNavigate } from 'react-router-dom';
 function EventList() {
-    const events=useSelector(store=>store.event?.events);
+    const societyId=useSelector(store=>store.auth.userDetails?.societyId)
+    const allEvents=useSelector(store=>store.event?.events);
+    const events=allEvents.filter(event=>event.societyId===societyId)
     const [openModal, setOpenModal] = useState(false);
     const handleOpenModal = () => (setOpenModal(true));
     const handleCloseModal = () => (setOpenModal(false));

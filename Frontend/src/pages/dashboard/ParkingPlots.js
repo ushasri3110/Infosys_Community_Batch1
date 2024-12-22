@@ -4,7 +4,9 @@ import { Card } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllParking } from '../../redux/parking/parking.action';
 function ParkingPlots() {
-  const parking=useSelector(store=>store.parking?.parkings)
+  const societyId=useSelector(store=>store.auth.userDetails?.societyId)
+  const allParking=useSelector(store=>store.parking?.parkings)
+  const parking=allParking?.filter(parking=>parking.societyId===societyId)
   return (
     <Card className="flex flex-col w-[15%] p-2 space-y-2 rounded-md" sx={{color:"gray"}}>
     <div className="flex flex-row justify-between items-center">

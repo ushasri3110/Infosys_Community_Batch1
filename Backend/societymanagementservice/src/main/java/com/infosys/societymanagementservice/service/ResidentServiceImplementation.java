@@ -33,35 +33,57 @@ public class ResidentServiceImplementation implements ResidentService{
     FlatRepository flatRepository;
     @Override
     public String residentRegistration(ResidentDto residentDto, String jwt) throws RegistrationException {
-        Flat flat=flatService.getFlatByFlatNo(residentDto.getFlatNo());
-        String email=authenticationInterface.getEmailFromJWT(jwt);
-        Society society=societyService.getSocietyByName(residentDto.getSocietyName());
-        Resident newResident=new Resident();
-        newResident.setName(residentDto.getName());
-        String number=residentDto.getPhoneNo();
+        // Fetch the society first to get the societyId
+        Society society = societyService.getSocietyByName(residentDto.getSocietyName());
+        if (society == null) {
+            throw new RegistrationException("Invalid Society Name");
+        }
+
+        // Fetch the flat by flatNo and societyId
+        Flat flat = flatService.getFlatByFlatNoAndSocietyId(residentDto.getFlatNo(), society.getSocietyId());
+        if (flat == null) {
+            throw new RegistrationException("Invalid Flat Number for the provided Society");
+        }
+
+        // Extract email from JWT
+        String email = authenticationInterface.getEmailFromJWT(jwt);
+
+        // Validate phone number
+        String number = residentDto.getPhoneNo();
         String regex = "^(\\+\\d{1,3}[- ]?)?\\d{10}$";
         Pattern pattern = Pattern.compile(regex);
-        if (!pattern.matcher(number).matches()){
+        if (!pattern.matcher(number).matches()) {
             throw new RegistrationException("Phone Number is Invalid");
         }
-        newResident.setPhoneNo(residentDto.getPhoneNo());
-        newResident.setFlatNo(residentDto.getFlatNo());
-        if (!society.getPostal().equals(residentDto.getPostal())){
+
+        // Validate postal code
+        if (!society.getPostal().equals(residentDto.getPostal())) {
             throw new RegistrationException("Postal is Invalid");
         }
+
+        // Create a new Resident
+        Resident newResident = new Resident();
+        newResident.setName(residentDto.getName());
+        newResident.setPhoneNo(residentDto.getPhoneNo());
+        newResident.setFlatNo(residentDto.getFlatNo());
         newResident.setPostal(residentDto.getPostal());
         newResident.setEmail(email);
         newResident.setSocietyId(society.getSocietyId());
         newResident.setFlatId(flat.getFlatId());
         newResident.setRole("Resident");
-        Resident savedResident=residentRepository.save(newResident);
+
+        // Save the resident and update flat as occupied
+        Resident savedResident = residentRepository.save(newResident);
         flat.setOccupied(true);
         flatRepository.save(flat);
-        if (savedResident.getResidentId()==null){
+
+        if (savedResident.getResidentId() == null) {
             throw new RegistrationException("Unable to Register");
         }
+
         return "Registration Successful";
     }
+
 
     @Override
     public List<Resident> getResidents() {
@@ -75,16 +97,8 @@ public class ResidentServiceImplementation implements ResidentService{
     }
 
     @Override
-    public ResidentProfileDto getResidentProfile(String jwt) {
+    public Resident getResidentProfile(String jwt) {
         Resident resident=getResident(jwt);
-        ResidentProfileDto res=new ResidentProfileDto();
-        res.setName(resident.getName());
-        res.setPhoneNo(resident.getPhoneNo());
-        res.setPostal(resident.getPostal());
-        res.setFlatNo(resident.getFlatNo());
-        Society society=societyService.getSocietyById(resident.getSocietyId());
-        res.setSocietyName(society.getSocietyName());
-        res.setEmail(resident.getEmail());
-        return res;
+        return resident;
     }
 }

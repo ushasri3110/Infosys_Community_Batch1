@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class FlatServiceImplementation implements FlatService{
@@ -20,13 +19,16 @@ public class FlatServiceImplementation implements FlatService{
     }
 
     @Override
-    public Flat getFlatByFlatNo(String flatNo) throws RegistrationException {
-        Flat flat=flatRepository.findByFlatNo(flatNo);
-        if (flat!=null){
-            return flat;
+    public Flat getFlatByFlatNoAndSocietyId(String flatNo, Long societyId) throws RegistrationException {
+        List<Flat> flats=flatRepository.findAll();
+        for (Flat flat:flats){
+            if (flat.getFlatNo().equals(flatNo) && flat.getSocietyId().equals(societyId)){
+                return flat;
+            }
         }
         throw new RegistrationException("Flat Not Found");
     }
+
 
     @Override
     public List<Flat> getAllFlats() {

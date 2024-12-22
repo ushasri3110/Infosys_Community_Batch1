@@ -48,7 +48,6 @@ public class RequestServiceImplementation implements RequestService {
             newRequest.setDescription(requestDto.getDescription());
             newRequest.setStatus("Open");
             newRequest.setVendorId(requestDto.getVendorId());
-
             requestRepository.save(newRequest);
             return "Request sent and saved successfully.";
         } else {

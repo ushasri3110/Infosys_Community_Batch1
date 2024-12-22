@@ -31,5 +31,4 @@ public class Society {
     private String district;
     private String postal;
     private String email;
-
 }

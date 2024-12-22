@@ -11,5 +11,5 @@ public interface ResidentService {
     public String residentRegistration(ResidentDto residentDto,String jwt) throws RegistrationException;
     public List<Resident> getResidents();
     public Resident getResident(String jwt);
-    public ResidentProfileDto getResidentProfile(String jwt);
+    public Resident getResidentProfile(String jwt);
 }
