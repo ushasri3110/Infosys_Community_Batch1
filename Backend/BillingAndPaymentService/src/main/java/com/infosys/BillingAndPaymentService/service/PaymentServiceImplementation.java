@@ -41,7 +41,7 @@ public class PaymentServiceImplementation implements PaymentService{
         this.razorpayClient=new RazorpayClient(razorpayId,razorpaySecret);
     }
 
-    @Scheduled(cron = "0 55 18 20 * *", zone = "Asia/Kolkata")
+    @Scheduled(cron = "0 50 17 23 * *", zone = "Asia/Kolkata")
     public void billReminder(){
         List<FlatDto> flats=societyManagementInterface.getAllFlats();
         for (FlatDto flat:flats){
@@ -49,7 +49,7 @@ public class PaymentServiceImplementation implements PaymentService{
                 Payment newPayment=new Payment();
                 newPayment.setFlatNo(flat.getFlatNo());
                 newPayment.setSocietyId(flat.getSocietyId());
-                newPayment.setAmount(flat.getRent());
+                newPayment.setAmount((long) 3500);
                 newPayment.setStatus("PENDING");
                 paymentRepository.save(newPayment);
             }
@@ -62,21 +62,29 @@ public class PaymentServiceImplementation implements PaymentService{
     @Override
     public Payment createPayment(String jwt) throws RazorpayException {
         ResidentDto resident=societyManagementInterface.getResidentByJWT(jwt);
-        Payment flat=paymentRepository.findByFlatNo(resident.getFlatNo());
-        JSONObject json=new JSONObject();
-        json.put("amount",flat.getAmount()*100);
-        json.put("currency","INR");
-        json.put("receipt",resident.getEmail());
-        Order razorpayOrder=razorpayClient.orders.create(json);
-        flat.setRazorpayId(razorpayOrder.get("id"));
-        return paymentRepository.save(flat);
+        List<Payment> flats=paymentRepository.findByFlatNo(resident.getFlatNo());
+        for(Payment flat:flats){
+            if(flat.getStatus().equals("PENDING")){
+                JSONObject json=new JSONObject();
+                json.put("amount",flat.getAmount());
+                json.put("currency","INR");
+                json.put("receipt",resident.getEmail());
+                Order razorpayOrder=razorpayClient.orders.create(json);
+                flat.setRazorpayId(razorpayOrder.get("id"));
+                return paymentRepository.save(flat);
+            }
+        }
+        throw new RazorpayException("Flat Not Found");
     }
     @Override
     public void updateStatus(Map<String, String> response) {
         String razorpayId=response.get("razorpay_order_id");
         Payment details=paymentRepository.findByRazorpayId(razorpayId);
+        System.out.println(details);
         details.setStatus("PAID");
         details.setPaymentDate(new Date());
         paymentRepository.save(details);
+        System.out.println(details);
+        System.out.println("details updated");
     }
 }

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 function AddFlatsForm() {
   const [formData, setFormData] = useState({
     flatNo: '',
+    parkingNo:""
   });
   const dispatch=useDispatch()
   const navigate=useNavigate()
@@ -19,9 +20,10 @@ function AddFlatsForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addFlat(formData.flatNo))
+    dispatch(addFlat(formData))
     setFormData({
       flatNo: '',
+      parkingNo:""
     });
   };
 
@@ -40,7 +42,7 @@ function AddFlatsForm() {
           className="flex flex-col w-3/4 items-center space-y-5"
           onSubmit={handleSubmit}
         >
-          <h2 className="text-2xl font-bold text-gray-700">Add Flat Details</h2>
+          <h2 className="text-2xl font-bold text-gray-700">Add Flat and Parking Details</h2>
           <div className='flex flex-row items-center justify-center space-x-5'>
           <input
             type="text"
@@ -48,6 +50,15 @@ function AddFlatsForm() {
             onChange={handleChange}
             value={formData.flatNo}
             placeholder="Flat No"
+            className="h-10 w-full bg-gray-200 border border-gray-400 rounded-md pl-3 focus:outline-none focus:ring-2 focus:ring-cyan-600"
+            required
+          />
+          <input
+            type="text"
+            name="parkingNo"
+            onChange={handleChange}
+            value={formData.parkingNo}
+            placeholder="Parking No"
             className="h-10 w-full bg-gray-200 border border-gray-400 rounded-md pl-3 focus:outline-none focus:ring-2 focus:ring-cyan-600"
             required
           />

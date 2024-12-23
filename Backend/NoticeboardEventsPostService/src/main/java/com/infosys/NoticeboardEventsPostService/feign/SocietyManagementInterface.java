@@ -14,5 +14,5 @@ public interface SocietyManagementInterface {
     @GetMapping("/api/get-admin")
     public SocietyDto getAdminDetails(@RequestHeader("Authorization") String jwt);
     @GetMapping("/api/flatByFlatNo")
-    public FlatDto getFlatByFlatNo(@RequestHeader("Authorization") String jwt,@RequestParam("flatNo") String flatNo);
+    public FlatDto getFlatByFlatNoAndSocietyId(@RequestHeader("Authorization") String jwt,@RequestParam("flatNo") String flatNo);
 }

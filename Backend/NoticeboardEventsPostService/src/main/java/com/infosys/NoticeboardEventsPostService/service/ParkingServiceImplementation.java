@@ -20,7 +20,7 @@ public class ParkingServiceImplementation implements ParkingService{
     @Override
     public Parking addParking(String jwt,ParkingDto parkingDto) throws ParkingException{
         Parking parking=new Parking();
-        FlatDto flat=societyManagementInterface.getFlatByFlatNo(jwt,parkingDto.getFlatNo());
+        FlatDto flat=societyManagementInterface.getFlatByFlatNoAndSocietyId(jwt,parkingDto.getFlatNo());
         parking.setParkingNo(parkingDto.getParkingNo());
         parking.setFlatNo(parkingDto.getFlatNo());
         parking.setFlatId(flat.getFlatId());

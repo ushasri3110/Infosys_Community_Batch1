@@ -26,6 +26,7 @@ function App() {
   const jwt = localStorage.getItem('jwt');
   const isLogged = useSelector((store) => store.auth.isLogged);
   const user = useSelector((store) => store.auth.user);
+  
   useEffect(() => {
     if (jwt != null) {
       dispatch(getUser(jwt));
@@ -53,7 +54,7 @@ function App() {
     dispatch(getAllContacts());
     dispatch(getAllNotices());
     dispatch(getAllPosts())
-  },[jwt,isLogged])
+  },[jwt,isLogged,user])
   return (
     <div className="">
       {jwt ? ( 

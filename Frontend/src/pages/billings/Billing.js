@@ -16,7 +16,7 @@ function Billing() {
     useEffect(() => {
         const filteredBills = payments.filter(payment => payment.flatNo === flatNo && payment.status !== "PAID");
         setFlatBills(filteredBills);
-    }, []);
+    }, [flatNo,payments]);
     return (
         <div>
             <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={isLoading}>
